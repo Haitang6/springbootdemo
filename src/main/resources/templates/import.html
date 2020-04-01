@@ -80,7 +80,8 @@
                     <li><a href="#">账户</a></li>
                     <li><a href="#">清单</a></li>
                     <li><a href="#">驴友</a></li>
-                    <li><a href="/loginHtml">登录</a></li>
+                    <li th:if="${session.user!=null}"><a href="#" th:text="${session.user.petName}"></a></li>
+                    <li th:if="${session.user==null}"><a href="/loginHtml" th:text="登录"></a></li>
                 </ul>
             </div>
         </div>
@@ -95,11 +96,11 @@
 
         <!-- 通知 -->
         <div class="top-cart-block">
-            <div class="top-cart-info">
+            <div class="top-cart-info" style="padding-right: 13px">
                 <a href="javascript:void(0);" class="top-cart-info-count">3 个</a>
                 <a href="javascript:void(0);" class="top-cart-info-value">通知</a>
+                <i class="fa fa-bell" style="color:rgb(232,77,28)"></i>
             </div>
-            <i class="fa fa-shopping-cart"></i>
 
             <div class="top-cart-content-wrapper">
                 <div class="top-cart-content">
@@ -321,36 +322,36 @@
 
 <div th:fragment="footer">
     <!--尾部-->
-    <div class="pre-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6 pre-footer-col">
-                    <h2>关于我们</h2>
-                    <p>本平台致力于打造旅游平台，帮助千万朋友找到合适的旅游胜地 </p>
-                    <p>如有疑问请联系6866086 </p>
-                </div>
-                <div class="col-md-3 col-sm-6 pre-footer-col">
-                    <h2>消息</h2>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-angle-right"></i> <a href="contacts.html">Contact Us</a></li>
-                        <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Careers</a></li>
-                        <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Payment Methods</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-sm-6 pre-footer-col">
-                    <h2 class="margin-bottom-0">Latest Tweets</h2>
-                    <a class="twitter-timeline" href="https://twitter.com/twitterapi" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="455411516829736961" data-chrome="noheader nofooter noscrollbar noborders transparent">Loading tweets by @keenthemes...</a>
-                </div>
-                <div class="col-md-3 col-sm-6 pre-footer-col">
-                    <h2>联系我们</h2>
-                    <address class="margin-bottom-40">
-                        Phone: 6 866 086<br>
-                        Email: <a href="mailto:info@metronic.com">2242779007@qq.com</a><br>
-                    </address>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--    <div class="pre-footer">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-3 col-sm-6 pre-footer-col">-->
+<!--                    <h2>关于我们</h2>-->
+<!--                    <p>本平台致力于打造旅游平台，帮助千万朋友找到合适的旅游胜地 </p>-->
+<!--                    <p>如有疑问请联系6866086 </p>-->
+<!--                </div>-->
+<!--                <div class="col-md-3 col-sm-6 pre-footer-col">-->
+<!--                    <h2>消息</h2>-->
+<!--                    <ul class="list-unstyled">-->
+<!--                        <li><i class="fa fa-angle-right"></i> <a href="contacts.html">Contact Us</a></li>-->
+<!--                        <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Careers</a></li>-->
+<!--                        <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Payment Methods</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <div class="col-md-3 col-sm-6 pre-footer-col">-->
+<!--                    <h2 class="margin-bottom-0">Latest Tweets</h2>-->
+<!--                    <a class="twitter-timeline" href="https://twitter.com/twitterapi" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="455411516829736961" data-chrome="noheader nofooter noscrollbar noborders transparent">Loading tweets by @keenthemes...</a>-->
+<!--                </div>-->
+<!--                <div class="col-md-3 col-sm-6 pre-footer-col">-->
+<!--                    <h2>联系我们</h2>-->
+<!--                    <address class="margin-bottom-40">-->
+<!--                        Phone: 6 866 086<br>-->
+<!--                        Email: <a href="mailto:info@metronic.com">2242779007@qq.com</a><br>-->
+<!--                    </address>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="footer">
         <div class="container">
             <div class="row">
