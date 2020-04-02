@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Date: 2018/9/26 0026
  * @Time: 14:42
  */
-@RequestMapping("/springBoot")
 @Controller
 public class TestController {
 
@@ -19,10 +18,6 @@ public class TestController {
 
     @GetMapping("/test")
     public String GetUser(){
-
-//         userService.test();
-
-         return "login";
-
+         return "test";
     }
 }

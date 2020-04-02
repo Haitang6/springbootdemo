@@ -455,9 +455,9 @@ body.page-header-fixed {
   font-size: 23px;
   font-weight: 400;
 
-  margin-right: 67px;
-  padding-top: 22px;
-  padding-bottom: 22px;
+  /*margin-right: 67px;*/
+  /*padding-top: 22px;*/
+  /*padding-bottom: 22px;*/
 }
 
 .header .mobi-toggler {
@@ -721,15 +721,12 @@ body.page-header-fixed {
 	content: none;
 }*/
 .header-navigation .search-box {
-	right: -7px;
-	top: 100%;
-	padding: 15px;
-	display: none;
+	top: -16%;
+    left: 27%;
+	display: block;
 	background: #fcfafb;
 	position: absolute;
-	border-top: solid 2px #ea4c1d;
-	box-shadow: 5px 5px rgba(91, 91, 91, 0.2);
-	width: 274px;
+	width: 230px;
 	margin-top: 0;
 	z-index: 22;
 }

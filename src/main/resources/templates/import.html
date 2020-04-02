@@ -77,7 +77,7 @@
             </div>
             <div class="col-md-6 col-sm-6 additional-nav">
                 <ul class="list-unstyled list-inline pull-right">
-                    <li><a href="#">账户</a></li>
+                    <li><a href="#">发布</a></li>
                     <li><a href="#">清单</a></li>
                     <li><a href="#">驴友</a></li>
                     <li th:if="${session.user!=null}"><a href="#" th:text="${session.user.petName}"></a></li>
@@ -90,7 +90,9 @@
     <!-- 导航 -->
     <div class="header">
     <div class="container">
-        <a class="site-logo" href="shop-index.html"><img src="/modes/assets/frontend/layout/img/logos/logo-shop-red.png" alt="Metronic Shop UI"></a>
+        <a class="site-logo" href="/">
+            <img src="/imgs/logo.png" alt="Travel strategy" style="width: 170px">
+        </a>
 
         <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
 
@@ -158,63 +160,6 @@
                         美食
 
                     </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="header-navigation-content">
-                                <div class="row">
-                                    <div class="col-md-4 header-navigation-col">
-                                        <h4>Footwear</h4>
-                                        <ul>
-                                            <li><a href="shop-product-list.html">Astro Trainers</a></li>
-                                            <li><a href="shop-product-list.html">Basketball Shoes</a></li>
-                                            <li><a href="shop-product-list.html">Boots</a></li>
-                                            <li><a href="shop-product-list.html">Canvas Shoes</a></li>
-                                            <li><a href="shop-product-list.html">Football Boots</a></li>
-                                            <li><a href="shop-product-list.html">Golf Shoes</a></li>
-                                            <li><a href="shop-product-list.html">Hi Tops</a></li>
-                                            <li><a href="shop-product-list.html">Indoor and Court Trainers</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-4 header-navigation-col">
-                                        <h4>Clothing</h4>
-                                        <ul>
-                                            <li><a href="shop-product-list.html">Base Layer</a></li>
-                                            <li><a href="shop-product-list.html">Character</a></li>
-                                            <li><a href="shop-product-list.html">Chinos</a></li>
-                                            <li><a href="shop-product-list.html">Combats</a></li>
-                                            <li><a href="shop-product-list.html">Cricket Clothing</a></li>
-                                            <li><a href="shop-product-list.html">Fleeces</a></li>
-                                            <li><a href="shop-product-list.html">Gilets</a></li>
-                                            <li><a href="shop-product-list.html">Golf Tops</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-4 header-navigation-col">
-                                        <h4>Accessories</h4>
-                                        <ul>
-                                            <li><a href="shop-product-list.html">Belts</a></li>
-                                            <li><a href="shop-product-list.html">Caps</a></li>
-                                            <li><a href="shop-product-list.html">Gloves, Hats and Scarves</a></li>
-                                        </ul>
-
-                                        <h4>Clearance</h4>
-                                        <ul>
-                                            <li><a href="shop-product-list.html">Jackets</a></li>
-                                            <li><a href="shop-product-list.html">Bottoms</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-12 nav-brands">
-                                        <ul>
-                                            <li><a href="shop-product-list.html"><img title="esprit" alt="esprit" src="/modes/assets/frontend/pages/img/brands/esprit.jpg"></a></li>
-                                            <li><a href="shop-product-list.html"><img title="gap" alt="gap" src="/modes/assets/frontend/pages/img/brands/gap.jpg"></a></li>
-                                            <li><a href="shop-product-list.html"><img title="next" alt="next" src="/modes/assets/frontend/pages/img/brands/next.jpg"></a></li>
-                                            <li><a href="shop-product-list.html"><img title="puma" alt="puma" src="/modes/assets/frontend/pages/img/brands/puma.jpg"></a></li>
-                                            <li><a href="shop-product-list.html"><img title="zara" alt="zara" src="/modes/assets/frontend/pages/img/brands/zara.jpg"></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
                 </li>
                 <li><a href="shop-item.html">Kids</a></li>
                 <li class="dropdown dropdown100 nav-catalogue">
@@ -222,54 +167,6 @@
                         好友
 
                     </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="header-navigation-content">
-                                <div class="row">
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <div class="product-item">
-                                            <div class="pi-img-wrapper">
-                                                <a href="shop-item.html"><img src="/modes/assets/frontend/pages/img/products/model4.jpg" class="img-responsive" alt="Berry Lace Dress"></a>
-                                            </div>
-                                            <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                                            <div class="pi-price">$29.00</div>
-                                            <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <div class="product-item">
-                                            <div class="pi-img-wrapper">
-                                                <a href="shop-item.html"><img src="/modes/assets/frontend/pages/img/products/model3.jpg" class="img-responsive" alt="Berry Lace Dress"></a>
-                                            </div>
-                                            <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                                            <div class="pi-price">$29.00</div>
-                                            <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <div class="product-item">
-                                            <div class="pi-img-wrapper">
-                                                <a href="shop-item.html"><img src="/modes/assets/frontend/pages/img/products/model7.jpg" class="img-responsive" alt="Berry Lace Dress"></a>
-                                            </div>
-                                            <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                                            <div class="pi-price">$29.00</div>
-                                            <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">
-                                        <div class="product-item">
-                                            <div class="pi-img-wrapper">
-                                                <a href="shop-item.html"><img src="/modes/assets/frontend/pages/img/products/model4.jpg" class="img-responsive" alt="Berry Lace Dress"></a>
-                                            </div>
-                                            <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                                            <div class="pi-price">$29.00</div>
-                                            <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
@@ -282,18 +179,6 @@
                         <li><a href="shop-index-light-footer.html">Home Light Footer</a></li>
                         <li><a href="shop-product-list.html">Product List</a></li>
                         <li><a href="shop-search-result.html">Search Result</a></li>
-                        <li><a href="shop-item.html">Product Page</a></li>
-                        <li><a href="shop-shopping-cart-null.html">Shopping Cart (Null Cart)</a></li>
-                        <li><a href="shop-shopping-cart.html">Shopping Cart</a></li>
-                        <li><a href="shop-checkout.html">Checkout</a></li>
-                        <li><a href="shop-about.html">About</a></li>
-                        <li><a href="shop-contacts.html">Contacts</a></li>
-                        <li><a href="shop-account.html">My account</a></li>
-                        <li><a href="shop-wishlist.html">My Wish List</a></li>
-                        <li><a href="shop-goods-compare.html">Product Comparison</a></li>
-                        <li><a href="shop-standart-forms.html">Standart Forms</a></li>
-                        <li><a href="shop-faq.html">FAQ</a></li>
-                        <li><a href="shop-privacy-policy.html">Privacy Policy</a></li>
                         <li><a href="shop-terms-conditions-page.html">Terms &amp; Conditions</a></li>
                     </ul>
                 </li>
@@ -308,8 +193,8 @@
                             <div class="input-group">
                                 <input type="text" placeholder="搜索" class="form-control">
                                 <span class="input-group-btn">
-                      <button class="btn btn-primary" type="submit">搜索</button>
-                    </span>
+                                    <button class="btn btn-primary" type="submit">搜索</button>
+                                </span>
                             </div>
                         </form>
                     </div>
@@ -321,37 +206,6 @@
 </div>
 
 <div th:fragment="footer">
-    <!--尾部-->
-<!--    <div class="pre-footer">-->
-<!--        <div class="container">-->
-<!--            <div class="row">-->
-<!--                <div class="col-md-3 col-sm-6 pre-footer-col">-->
-<!--                    <h2>关于我们</h2>-->
-<!--                    <p>本平台致力于打造旅游平台，帮助千万朋友找到合适的旅游胜地 </p>-->
-<!--                    <p>如有疑问请联系6866086 </p>-->
-<!--                </div>-->
-<!--                <div class="col-md-3 col-sm-6 pre-footer-col">-->
-<!--                    <h2>消息</h2>-->
-<!--                    <ul class="list-unstyled">-->
-<!--                        <li><i class="fa fa-angle-right"></i> <a href="contacts.html">Contact Us</a></li>-->
-<!--                        <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Careers</a></li>-->
-<!--                        <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Payment Methods</a></li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--                <div class="col-md-3 col-sm-6 pre-footer-col">-->
-<!--                    <h2 class="margin-bottom-0">Latest Tweets</h2>-->
-<!--                    <a class="twitter-timeline" href="https://twitter.com/twitterapi" data-tweet-limit="2" data-theme="dark" data-link-color="#57C8EB" data-widget-id="455411516829736961" data-chrome="noheader nofooter noscrollbar noborders transparent">Loading tweets by @keenthemes...</a>-->
-<!--                </div>-->
-<!--                <div class="col-md-3 col-sm-6 pre-footer-col">-->
-<!--                    <h2>联系我们</h2>-->
-<!--                    <address class="margin-bottom-40">-->
-<!--                        Phone: 6 866 086<br>-->
-<!--                        Email: <a href="mailto:info@metronic.com">2242779007@qq.com</a><br>-->
-<!--                    </address>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
     <div class="footer">
         <div class="container">
             <div class="row">
