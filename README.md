@@ -6,3 +6,6 @@ URL这样子写很大可能会连接成功 jdbc:mysql://localhost:3306/springboo
 
 mybatis自动生成
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+
+
+海棠很棒
