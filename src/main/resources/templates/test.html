@@ -1,12 +1,136 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
     <head th:replace="import::style"></head>
-</head>
-<body class="ecommerce">
-<div th:replace="import::head"></div>
+    <link rel="stylesheet" href="/css/mycss.css">
+    <link rel="stylesheet" href="/editormd/css/editormd.css" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css">
+    <link href="/modes/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/modes/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
+    <link href="/modes/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/modes/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
+    <link href="/modes/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/modes/assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+    <link rel="stylesheet" type="text/css" href="/modes/assets/global/plugins/select2/select2.css"/>
+    <link href="/modes/assets/global/css/components-rounded.css" id="style_components" rel="stylesheet" type="text/css"/>
+    <link href="/modes/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/modes/assets/admin/pages/css/todo.css" rel="stylesheet" type="text/css"/>
+    <link href="/modes/assets/admin/layout4/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link id="style_color" href="/modes/assets/admin/layout4/css/themes/light.css" rel="stylesheet" type="text/css"/>
+    <link href="/modes/assets/admin/layout4/css/custom.css" rel="stylesheet" type="text/css"/>
+    <script src="/modes/assets/global/plugins/respond.min.js"></script>
+    <script src="/modes/assets/global/plugins/excanvas.min.js"></script>
+    <script src="/modes/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/modes/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/modes/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="/modes/assets/admin/pages/scripts/todo.js" type="text/javascript"></script>
+    <script src="/modes/assets/global/scripts/metronic.js" type="text/javascript"></script>
+    <script src="/modes/assets/admin/layout4/scripts/layout.js" type="text/javascript"></script>
+    <script src="/modes/assets/admin/layout4/scripts/demo.js" type="text/javascript"></script>
+    <script>
+        jQuery(document).ready(function() {
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            Demo.init(); // init demo features
+            Todo.init(); // init todo page
+        });
+    </script>
 
+</head>
+<body>
+<div>
+    <div class="title-head">
+        <label><i class="fa fa-arrow-left"></i>文章管理</label>
+        <input name="title"  placeholder="请输入标题" >
+        <button type="submit" th:text="保存草稿" class="btn-save"></button>
+        <button th:text="发布文章" class="btn-publish" data-toggle="modal" data-target="#myModal"></button>
+        <label th:text="海棠" style="color: #E6400C"></label>
+    </div>
+    <div id="editor">
+        <textarea name="context"></textarea>
+    </div>
+</div>
+<!--模态框-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    发布文章
+                </h4>
+            </div>
+
+            <div class="modal-body">
+                <form>
+
+                    <div class="form-group">
+                        <label>文章类型</label>
+                        <select class="form-control">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                            <option>Option 4</option>
+                            <option>Option 5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>文章标签</label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control todo-taskbody-tags" placeholder="Tags..." value="Pending, Requested">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>发布形式</label>
+                        <div class="radio-list">
+                            <label class="radio-inline">
+                                <div class="radio" id="uniform-optionsRadios4"><span class=""><input type="radio" name="optionsRadios" id="optionsRadios4" value="option1" checked=""></span></div>公开</label>
+                            <label class="radio-inline">
+                                <div class="radio" id="uniform-optionsRadios5"><span class="checked"><input type="radio" name="optionsRadios" id="optionsRadios5" value="option2"></span></div> 隐私 </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary">
+                    发布
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <input type="text" class="form-control todo-taskbody-tags" placeholder="Tags..." value="Pending, Requested">
+</div>
+
+<div th:replace="import::footer"></div>
 </body>
 </html>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="editormd/editormd.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var editor = editormd("editor", {
+            width  : "100%",
+            height : 665,
+            path   : "/editormd/lib/"
+        });
+    });
+</script>
