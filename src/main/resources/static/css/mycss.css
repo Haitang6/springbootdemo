@@ -16,14 +16,14 @@
 .title-head input{
     height: 40px;
     width: 62%;
-    border-radius: 10px;
+    border-radius: 5px;!important;
     border: 1px solid grey;
     outline: none;
     margin-left: 20px;
     margin-right: 20px;
 }
 .title-head button{
-    border-radius: 10px;
+    border-radius: 5px;!important;
     width: 130px;
     height: 40px;
 }
