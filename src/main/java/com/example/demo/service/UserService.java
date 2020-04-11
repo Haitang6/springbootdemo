@@ -1,10 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Test;
-import com.example.demo.entity.TestExample;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserExample;
-import com.example.demo.mapper.TestMapper;
 import com.example.demo.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,28 +11,15 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    TestMapper testMapper;
-
-    @Autowired
+     @Autowired
     UserMapper userMapper;
-    public void test() {
-
-        TestExample testExample=new TestExample();
-        testExample.createCriteria()
-                .andUsernameEqualTo("aa");
-
-        List<Test> tests = testMapper.selectByExample(testExample);
-        System.out.println(tests);
-    }
 
     public void register(User user){
-        UserExample userExample=new UserExample();
+        System.out.println(user);
         userMapper.insert(user);
     }
 
     public List<User> login (User user){
-
         UserExample userExample = new UserExample();
         userExample.createCriteria()
                 .andPhoneNumberEqualTo(user.getPhoneNumber())
@@ -45,7 +29,6 @@ public class UserService {
     }
 
     public void resetPwd(User user) {
-
         UserExample userExample = new UserExample();
         userExample.createCriteria()
                 .andPhoneNumberEqualTo(user.getPhoneNumber());

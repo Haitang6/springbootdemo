@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www/thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head >
     <head th:replace="import::style"></head>
     <meta charset="utf-8"/>
@@ -55,7 +55,7 @@
         <input name="title"  placeholder="请输入标题" >
         <button type="submit" th:text="保存草稿" class="btn-save"></button>
         <button th:text="发布文章" class="btn-publish" data-toggle="modal" data-target="#myModal"></button>
-        <label th:text="海棠" style="color: #E6400C"></label>
+        <label th:text="${session.user.petName}" style="color: #E6400C"></label>
     </div>
     <div id="editor">
         <textarea name="context"></textarea>

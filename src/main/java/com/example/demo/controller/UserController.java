@@ -27,7 +27,6 @@ public class UserController {
         }else {
             request.getSession().setAttribute("user",users.get(0));
             return "redirect:/";
-
         }
     }
 
@@ -38,14 +37,15 @@ public class UserController {
         userService.register(user);
         return "redirect:/loginHtml";
     }
-
     @PostMapping("/reset")
     public String resetPwd(User user){
         userService.resetPwd(user);
         return "redirect:/loginHtml";
     }
-
-
+    @GetMapping("/details")
+    public String details(){
+        return "details";
+    }
 
 
     @GetMapping("/loginHtml")
@@ -57,5 +57,9 @@ public class UserController {
     @GetMapping("/resetPwd")
     public String preReset(){
         return "resetPwd";
+    }
+    @GetMapping("/publishHtml")
+    public String prePublish(){
+        return "publish";
     }
 }

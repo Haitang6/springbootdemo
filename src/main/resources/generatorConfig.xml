@@ -4,16 +4,16 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <classPathEntry  location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.45\mysql-connector-java-5.1.45.jar"/>
+    <classPathEntry  location="C:\Users\haitang\.m2\repository\mysql\mysql-connector-java\5.1.45\mysql-connector-java-5.1.45.jar"/>
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         
 <!--        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>-->
 
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/springboot?serverTimezone=UTC"
+                        connectionURL="jdbc:mysql://localhost:3306/travel?serverTimezone=UTC"
                         userId="root"
-                        password="01200221">
+                        password="linker01200221">
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
@@ -35,8 +35,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="test" domainObjectName="Test"></table>
-        <table tableName="demo" domainObjectName="Demo"></table>
-        <table tableName="user" domainObjectName="User"></table>
+        <table tableName="user" domainObjectName="User"/>
+        <table tableName="article" domainObjectName="Article"/>
     </context>
 </generatorConfiguration>

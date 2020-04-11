@@ -42,7 +42,7 @@
 <div th:fragment="head">
     <!-- 头部 -->
     <div class="pre-header" >
-    <div class="container">
+        <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-6 additional-shop-info">
                 <ul class="list-unstyled list-inline">
@@ -59,7 +59,7 @@
             </div>
             <div class="col-md-6 col-sm-6 additional-nav">
                 <ul class="list-unstyled list-inline pull-right">
-                    <li><a href="#">发布</a></li>
+                    <li><a href="/publishHtml">发布</a></li>
                     <li><a href="#">清单</a></li>
                     <li><a href="#">驴友</a></li>
                     <li th:if="${session.user!=null}"><a href="#" th:text="${session.user.petName}"></a></li>
