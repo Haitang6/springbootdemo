@@ -11,11 +11,10 @@ import java.util.List;
 @Service
 public class UserService {
 
-     @Autowired
+    @Autowired
     UserMapper userMapper;
 
     public void register(User user){
-        System.out.println(user);
         userMapper.insert(user);
     }
 

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Article;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,6 @@ public class UserController {
             return "redirect:/";
         }
     }
-
     @PostMapping("/register")
     public String register(User user){
         user.setGmtCreate(new Date());
@@ -42,12 +42,9 @@ public class UserController {
         userService.resetPwd(user);
         return "redirect:/loginHtml";
     }
+
     @GetMapping("/details")
-    public String details(){
-        return "details";
-    }
-
-
+    public String details(){ return "details"; }
     @GetMapping("/loginHtml")
     public String preLogin(){ return "login"; }
     @GetMapping("/registerHtml")

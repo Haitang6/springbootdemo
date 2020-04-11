@@ -1,17 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www/thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <head th:replace="import::style"></head>
     <title>首页</title>
-    <link href="/modes/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
-    <link href="/modes/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
-    <link href="/modes/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/modes/assets/admin/pages/css/blog.css" rel="stylesheet" type="text/css"/>
-    <link href="/modes/assets/admin/pages/css/news.css" rel="stylesheet" type="text/css"/>
-    <link href="/modes/assets/global/css/components-rounded.css" id="style_components" rel="stylesheet" type="text/css"/>
-    <link href="/modes/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
-    <link href="/modes/assets/admin/layout4/css/layout.css" rel="stylesheet" type="text/css"/>
-    <link href="/modes/assets/admin/layout4/css/custom.css" rel="stylesheet" type="text/css"/>
 </head>
 <body class="ecommerce">
 <div th:replace="import::head"></div>
@@ -22,128 +13,48 @@
                 <div class="row">
                     <div class="col-md-9 col-sm-8 article-block">
                         <h1 style="margin-top:0px">最新消息</h1>
-                        <div class="row">
-                            <div class="col-md-4 blog-img blog-tag-data">
-                                <img src="/modes/assets/admin/pages/media/gallery/image4.jpg" alt="" class="img-responsive">
-                                <ul class="list-inline">
-                                    <li>
-                                        <i class="fa fa-calendar"></i>
-                                        <a href="javascript:;">
-                                            April 16, 2013 </a>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-comments"></i>
-                                        <a href="javascript:;">
-                                            38 Comments </a>
-                                    </li>
-                                </ul>
-                                <ul class="list-inline blog-tags">
-                                    <li>
-                                        <i class="fa fa-tags"></i>
-                                        <a href="javascript:;">
-                                            Technology </a>
-                                        <a href="javascript:;">
-                                            Education </a>
-                                        <a href="javascript:;">
-                                            Internet </a>
-                                    </li>
-                                </ul>
+                        <div th:each="article:${articles}">
+                            <div class="row">
+                                <div class="col-md-4 blog-img blog-tag-data">
+                                    <img src="/modes/assets/admin/pages/media/gallery/image4.jpg" alt="" class="img-responsive">
+                                    <ul class="list-inline">
+                                        <li>
+                                            <i class="fa fa-calendar"></i>
+                                            <a href="javascript:;" th:text="${article.getGmtCreate()}">
+                                                April 16, 2013 </a>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-comments"></i>
+                                            <a href="javascript:;" th:text="${article.getCommentCount()}+'个评论'"></a>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-inline blog-tags">
+                                        <li>
+                                            <i class="fa fa-tags"></i>
+                                            <a href="javascript:;">
+                                                Technology </a>
+                                            <a href="javascript:;">
+                                                Education </a>
+                                            <a href="javascript:;">
+                                                Internet </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-8 blog-article">
+                                    <h3>
+                                        <a href="page_blog_item.html" th:text="${article.getTitle()}">
+                                             </a>
+                                    </h3>
+                                    <p th:text="${article.getContext()}">
+                                    </p>
+                                    <a class="btn blue" href="/details">
+                                        更多 <i class="m-icon-swapright m-icon-white"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="col-md-8 blog-article">
-                                <h3>
-                                    <a href="page_blog_item.html">
-                                        Hello here will be some recent news.. </a>
-                                </h3>
-                                <p>
-                                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.
-                                </p>
-                                <a class="btn blue" href="/details">
-                                    Read more <i class="m-icon-swapright m-icon-white"></i>
-                                </a>
-                            </div>
+                            <hr>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-4 blog-img blog-tag-data">
-                                <img src="/modes/assets/admin/pages/media/gallery/image5.jpg" alt="" class="img-responsive">
-                                <ul class="list-inline">
-                                    <li>
-                                        <i class="fa fa-calendar"></i>
-                                        <a href="javascript:;">
-                                            April 16, 2013 </a>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-comments"></i>
-                                        <a href="javascript:;">
-                                            38 Comments </a>
-                                    </li>
-                                </ul>
-                                <ul class="list-inline blog-tags">
-                                    <li>
-                                        <i class="fa fa-tags"></i>
-                                        <a href="javascript:;">
-                                            Technology </a>
-                                        <a href="javascript:;">
-                                            Education </a>
-                                        <a href="javascript:;">
-                                            Internet </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-md-8 blog-article">
-                                <h3>
-                                    <a href="page_blog_item.html">
-                                        Hello here will be some recent news.. </a>
-                                </h3>
-                                <p>
-                                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.
-                                </p>
-                                <a class="btn blue" href="page_blog_item.html">
-                                    Read more <i class="m-icon-swapright m-icon-white"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-4 blog-img blog-tag-data">
-                                <img src="/modes/assets/admin/pages/media/gallery/image5.jpg" alt="" class="img-responsive">
-                                <ul class="list-inline">
-                                    <li>
-                                        <i class="fa fa-calendar"></i>
-                                        <a href="javascript:;">
-                                            April 16, 2013 </a>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-comments"></i>
-                                        <a href="javascript:;">
-                                            38 Comments </a>
-                                    </li>
-                                </ul>
-                                <ul class="list-inline blog-tags">
-                                    <li>
-                                        <i class="fa fa-tags"></i>
-                                        <a href="javascript:;">
-                                            Technology </a>
-                                        <a href="javascript:;">
-                                            Education </a>
-                                        <a href="javascript:;">
-                                            Internet </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-md-8 blog-article">
-                                <h3>
-                                    <a href="page_blog_item.html">
-                                        Hello here will be some recent news.. </a>
-                                </h3>
-                                <p>
-                                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus. Fusce condimentum eleifend enim a feugiat.
-                                </p>
-                                <a class="btn blue" href="page_blog_item.html">
-                                    Read more <i class="m-icon-swapright m-icon-white"></i>
-                                </a>
-                            </div>
-                        </div>
+
                         <ul class="pagination pull-right">
                             <li>
                                 <a href="javascript:;">
@@ -180,7 +91,6 @@
                                 </a>
                             </li>
                         </ul>
-
                     </div>
                     <!--右侧小框框-->
                     <div class="col-md-3 col-sm-4 blog-sidebar">
