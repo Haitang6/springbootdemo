@@ -31,7 +31,6 @@ public class UserService {
         UserExample userExample = new UserExample();
         userExample.createCriteria()
                 .andPhoneNumberEqualTo(user.getPhoneNumber());
-
         List<User> users = userMapper.selectByExample(userExample);
         if (users.size()!=0){
             users.get(0).setPassword(user.getPassword());

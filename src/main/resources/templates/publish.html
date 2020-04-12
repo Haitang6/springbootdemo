@@ -25,6 +25,19 @@
             Todo.init();
         });
     </script>
+    <script type="text/javascript">
+        $(function () {
+            var editor = editormd("editor", {
+                width: "100%",
+                height: 665,
+                path: "/editormd/lib/",
+                placeholder:"输入文章信息"
+            });
+        });
+    </script>
+    <script src="editormd/editormd.min.js"></script>
+
+
 </head>
 <body>
 <div>
@@ -99,14 +112,3 @@
 <div th:replace="import::footer"></div>
 </body>
 </html>
-<script type="text/javascript">
-    $(function () {
-        var editor = editormd("editor", {
-            width: "100%",
-            height: 665,
-            path: "/editormd/lib/"
-        });
-    });
-</script>
-<script src="editormd/editormd.min.js"></script>
-
