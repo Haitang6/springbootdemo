@@ -5,7 +5,6 @@ import com.example.demo.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,8 +13,9 @@ public class ArticleController {
 
     @Autowired
     ArticleService articleService;
+
     @PostMapping("/publishArticle")
-    public String publishArticle(Article article){
+    public String publishArticle(Article article) {
         article.setAid(UUID.randomUUID().toString());
         article.setGmtCreate(new Date());
         article.setCommentCount(0);

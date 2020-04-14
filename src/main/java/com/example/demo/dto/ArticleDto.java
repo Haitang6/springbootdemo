@@ -17,27 +17,35 @@ public class ArticleDto {
     private Date gmtCreate;
     private Integer commentCount;
     private Integer likeCount;
+
     public String getAid() {
         return aid;
     }
+
     public void setAid(String aid) {
         this.aid = aid == null ? null : aid.trim();
     }
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
     }
+
     public String getContext() {
         return context;
     }
+
     public void setContext(String context) {
         this.context = context == null ? null : context.trim();
     }
+
     public String getType() {
         return type;
     }
+
     public void setType(String type) {
         this.type = type == null ? null : type.trim();
     }
@@ -51,26 +59,33 @@ public class ArticleDto {
     }
 
     public String getIsPublic() {
-            return isPublic;
-        }
+        return isPublic;
+    }
+
     public void setIsPublic(String isPublic) {
         this.isPublic = isPublic == null ? null : isPublic.trim();
     }
+
     public Date getGmtCreate() {
         return gmtCreate;
     }
+
     public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
+
     public Integer getCommentCount() {
         return commentCount;
     }
+
     public void setCommentCount(Integer commentCount) {
         this.commentCount = commentCount;
     }
+
     public Integer getLikeCount() {
         return likeCount;
     }
+
     public void setLikeCount(Integer likeCount) {
         this.likeCount = likeCount;
     }

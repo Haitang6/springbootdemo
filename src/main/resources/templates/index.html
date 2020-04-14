@@ -3,16 +3,20 @@
 <head>
     <head th:replace="import::style"></head>
     <title>首页</title>
-
-    <script type="text/javascript">
-        $(function () {
-            editormd.markdownToHTML("article-view",{});
-        });
-    </script>
     <link rel="stylesheet" href="/editormd/css/editormd.preview.css">
     <script src="/editormd/lib/marked.min.js"></script>
     <script src="/editormd/lib/prettify.min.js"></script>
     <script src="/editormd/editormd.js"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+        $(function () {
+            var articles = [[${articles}]];
+            for (var i = 0; i < articles.length; i++) {
+                var aid = articles[i].aid + "-article-view";
+                editormd.markdownToHTML(aid, {});
+            }
+        });
+    </script>
 </head>
 <body class="ecommerce">
 <div th:replace="import::head"></div>
@@ -25,8 +29,9 @@
                         <h1 style="margin-top:0px">最新消息</h1>
                         <div th:each="article:${articles}">
                             <div class="row">
-                                <div class="col-md-4 blog-img blog-tag-data">
-                                    <img src="/modes/assets/admin/pages/media/gallery/image4.jpg" alt="" class="img-responsive">
+                                <div class="col-md-3 blog-img blog-tag-data">
+                                    <img src="/modes/assets/admin/pages/media/gallery/image4.jpg" alt=""
+                                         class="img-responsive">
                                     <ul class="list-inline">
                                         <li>
                                             <i class="fa fa-calendar"></i>
@@ -38,22 +43,23 @@
                                             <a href="javascript:;" th:text="${article.getCommentCount()}+'个评论'"></a>
                                         </li>
                                     </ul>
-                                    <ul class="list-inline blog-tags" >
-                                        <li >
+                                    <ul class="list-inline blog-tags">
+                                        <li>
                                             <i class="fa fa-tags"></i>
-                                            <span th:each="tag:${article.getTags()}" >
-                                            <a th:text="tag" ></a>
+                                            <span th:each="tag:${article.getTags()}">
+                                                <a th:text="${tag}"></a>
                                             </span>
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-8 blog-article">
+                                <div class="col-md-9 blog-article"
+                                     style="height: 275px ;overflow:hidden;text-overflow:ellipsis;">
                                     <h3>
                                         <a href="page_blog_item.html" th:text="${article.getTitle()}">
-                                             </a>
+                                        </a>
                                     </h3>
-                                    <div  id="article-view">
-                                        <textarea style="width: 100%;height: 210px" th:text="${article.getContext()}"></textarea>
+                                    <div id="article-view" th:id="${article.getAid()} + '-article-view'">
+                                        <textarea style="width: 100%" th:text="${article.getContext()}"></textarea>
                                     </div>
 
                                     <a class="btn blue" href="/details">
