@@ -53,10 +53,6 @@ public class UserController {
         return "redirect:/loginHtml";
     }
 
-    @GetMapping("/details")
-    public String details() {
-        return "details";
-    }
 
     @GetMapping("/loginHtml")
     public String preLogin() {

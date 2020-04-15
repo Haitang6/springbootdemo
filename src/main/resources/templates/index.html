@@ -32,15 +32,14 @@
                                 <div class="col-md-3 blog-img blog-tag-data">
                                     <img src="/modes/assets/admin/pages/media/gallery/image4.jpg" alt=""
                                          class="img-responsive">
-                                    <ul class="list-inline">
+                                    <ul class="list-inline" style="margin-top: 10px">
                                         <li>
-                                            <i class="fa fa-calendar"></i>
-                                            <a href="javascript:;" th:text="${article.getGmtCreate()}">
-                                                April 16, 2013 </a>
+                                            <i class="fa fa-calendar" style="color: #E6400C"></i>
+                                            <a href="javascript:;" th:text="${article.getGmtCreate()}" style="color: black"></a>
                                         </li>
                                         <li>
-                                            <i class="fa fa-comments"></i>
-                                            <a href="javascript:;" th:text="${article.getCommentCount()}+'个评论'"></a>
+                                            <i class="fa fa-comments" style="color: #E6400C"></i>
+                                            <a href="javascript:;" th:text="${article.getCommentCount()}+'个评论'" style="color: black"></a>
                                         </li>
                                     </ul>
                                     <ul class="list-inline blog-tags">
@@ -52,20 +51,15 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-9 blog-article"
-                                     style="height: 275px ;overflow:hidden;text-overflow:ellipsis;">
+                                <div class="col-md-9 blog-article" style="height: 275px ;overflow:hidden;text-overflow:ellipsis;">
                                     <h3>
-                                        <a href="page_blog_item.html" th:text="${article.getTitle()}">
+                                        <a href="page_blog_item.html" th:text="${article.getTitle()}" th:href="@{'/details/'+${article.aid}}">
                                         </a>
                                     </h3>
-                                    <div id="article-view" th:id="${article.getAid()} + '-article-view'">
+                                    <div th:id="${article.getAid()} + '-article-view'">
                                         <textarea style="width: 100%" th:text="${article.getContext()}"></textarea>
                                     </div>
-
-                                    <a class="btn blue" href="/details">
-                                        更多 <i class="m-icon-swapright m-icon-white"></i>
-                                    </a>
-                                </div>
+                             </div>
                             </div>
                             <hr>
                         </div>

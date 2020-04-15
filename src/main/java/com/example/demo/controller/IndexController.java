@@ -27,23 +27,23 @@ public class IndexController {
         Cookie[] cookies = request.getCookies();
         if (cookies==null){
 
-        }
-        for (Cookie cookie:cookies){
-            String name = cookie.getName();
-            if ("token".equals(name)){
-                String tokenValue = cookie.getValue();
-                //如果根据tokenValue能查询到用户，就登录此用户
+        }else {
+            for (Cookie cookie:cookies){
+                String name = cookie.getName();
+                if ("token".equals(name)){
+                    String tokenValue = cookie.getValue();
+                    //如果根据tokenValue能查询到用户，就登录此用户
 //                User user=userService.findByToken(tokenValue);
-                if (userService.findByToken(tokenValue) == null){
-                    //请到首页进行登录
-                }else {
-                    //把此用户放到session域
-                    request.getSession().setAttribute("user", userService.findByToken(tokenValue));
-                    break;
+                    if (userService.findByToken(tokenValue) == null){
+                        //请到首页进行登录
+                    }else {
+                        //把此用户放到session域
+                        request.getSession().setAttribute("user", userService.findByToken(tokenValue));
+                        break;
+                    }
                 }
             }
         }
-
 
         //查询所有文章
         List<ArticleDto> articleDtos = articleService.findAll();

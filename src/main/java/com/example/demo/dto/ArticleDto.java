@@ -14,7 +14,7 @@ public class ArticleDto {
     private String type;
     private String[] tags;
     private String isPublic;
-    private Date gmtCreate;
+    private String gmtCreate;
     private Integer commentCount;
     private Integer likeCount;
 
@@ -66,11 +66,12 @@ public class ArticleDto {
         this.isPublic = isPublic == null ? null : isPublic.trim();
     }
 
-    public Date getGmtCreate() {
+
+    public String getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(Date gmtCreate) {
+    public void setGmtCreate(String gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
