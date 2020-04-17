@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.ArticleDto;
 import com.example.demo.dto.CommentDto;
 import com.example.demo.entity.Article;
+import com.example.demo.repository.TestRepository;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,21 @@ public class ArticleController {
     ArticleService articleService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    TestRepository testService;
+//    @Autowired
+//    ArticleRepository articleRepository;
+//
+//    @GetMapping("findAll")
+//    public String findAll(){
+//        Iterable article  = articleRepository.findAll();
+//        System.out.println(article);
+//        return "redirect:/";
+//    }
+
+
+
+
     @PostMapping("/publishArticle")
     public String publishArticle(Article article) {
         article.setAid(UUID.randomUUID().toString());

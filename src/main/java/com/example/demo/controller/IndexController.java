@@ -27,7 +27,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request,
-                        @RequestParam(name = "pageNum", required = true, defaultValue = "1") int pageNmu) {
+                        @RequestParam(name = "pageNum", required = true, defaultValue = "1") int pageNum) {
         //通过cookie获取登录态
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
@@ -51,8 +51,9 @@ public class IndexController {
         }
 
         //查询所有文章
-        List<ArticleDto> articleDtos = articleService.findAll(pageNmu);
+        List<ArticleDto> articleDtos = articleService.findAll(pageNum);
         PageInfo<ArticleDto> pageInfo = new PageInfo<>(articleDtos);
+        pageInfo.setPageNum(pageNum);
         model.addAttribute("ArticlePageInfo", pageInfo);
         return "index";
     }

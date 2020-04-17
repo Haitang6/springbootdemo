@@ -66,7 +66,7 @@
 
                         <ul class="pagination pull-right">
                             <li>
-                                <a th:href="@{/(pageNum=${ArticlePageInfo.pageNum-1})}">
+                                <a th:href="@{/(pageNum=${ArticlePageInfo.pageNum} - 1)}">
                                     <i class="fa fa-angle-left"></i>
                                 </a>
                             </li>
@@ -89,7 +89,7 @@
                                 <a th:href="@{/(pageNum=6)}">6 </a>
                             </li>
                             <li>
-                                <a th:href="@{/(pageNum=${ArticlePageInfo.pageNum+1})}">
+                                <a th:href="@{/(pageNum=${ArticlePageInfo.pageNum} + 1)}">
                                     <i class="fa fa-angle-right"></i>
                                 </a>
                             </li>

@@ -4,7 +4,9 @@ import com.example.demo.dto.ArticleDto;
 import com.example.demo.entity.Article;
 import com.example.demo.entity.ArticleExample;
 import com.example.demo.entity.Comment;
+import com.example.demo.entity.CommentExample;
 import com.example.demo.mapper.ArticleMapper;
+import com.example.demo.mapper.CommentMapper;
 import com.example.demo.utils.DataUtils;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +21,8 @@ import java.util.List;
 public class ArticleService {
     @Autowired
     ArticleMapper articleMapper;
+    @Autowired
+    CommentMapper commentMapper;
     public void insert(Article article) {
         articleMapper.insert(article);
     }
@@ -47,6 +51,10 @@ public class ArticleService {
         articleExample.createCriteria()
                 .andAidEqualTo(aid);
         List<Article> articles = articleMapper.selectByExample(articleExample);
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria()
+                .andPidEqualTo(aid);
+        List<Comment> comments = commentMapper.selectByExample(commentExample);
         if (articles == null){
             return null;
         }else {
@@ -56,6 +64,7 @@ public class ArticleService {
             BeanUtils.copyProperties(articles.get(0),articleDto);
             articleDto.setTags(tags);
             articleDto.setGmtCreate(dateStr);
+            articleDto.setCommentCount(comments.size());
             return articleDto;
         }
     }

@@ -1,7 +1,6 @@
         function comment () {
             var pid=$("#pid").val();
             var context=$("#context").val();
-            alert(pid);
             if (context == null){
                 alert("评论内容不能为空");
             }else {
