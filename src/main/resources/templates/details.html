@@ -20,152 +20,8 @@
 <div class="page-container" style="padding: 0px">
     <div class="portlet light" style="padding: 30px 150px 15px 150px">
         <div class="row">
-            <div class="col-md-9 article-block">
-                <h3 style="margin-top:0;" th:text="${article.title}"></h3>
-                <div class="blog-tag-data">
-                    <img src="/modes/assets/admin/pages/media/gallery/item_img.jpg" class="img-responsive" alt="">
-                    <div class="row" style="margin-top: 10px;color: #E6400C">
-                        <div class="col-md-8">
-                            <ul class="list-inline blog-tags">
-                                <li>
-                                    <i class="fa fa-tags"></i>
-                                    <span th:each="tag:${article.tags}">
-                                        <a th:text="${tag}"></a>
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 blog-tag-data-inner">
-                            <ul class="list-inline">
-                                <li>
-                                    <i class="fa fa-calendar"></i>
-                                    <a th:text="${article.gmtCreate}" style="color: #0C1021"></a>
-                                </li>
-                                <li>
-                                    <i class="fa fa-comments"></i>
-                                    <a th:text="${article.commentCount}+'个评论'" style="color: #0C1021"></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div id="article-view">
-                        <textarea style="width: 100%" th:text="${article.context}"></textarea>
-                    </div>
-                </div>
-                <hr>
-                <!--评论-->
-                <h3>评论</h3>
-                <div class="media" th:each="comment:${comments}">
-                    <a href="javascript:;" class="pull-left">
-                        <img alt="" src="/modes/assets/admin/pages/media/blog/9.jpg" class="media-object"
-                             style="width: 60px">
-                    </a>
-                    <div class="media-body" >
-                        <h4 class="media-heading" th:text="${comment.gmtCreate}">Media heading <span>时间<a href="javascript:;">回复 </a>
-                            </span>
-                        </h4>
-                        <p th:text="${comment.context}">
-                        </p>
-                        <hr>
-                        <!-- Nested media object -->
-<!--                        <div class="media">-->
-<!--                            <a href="javascript:;" class="pull-left">-->
-<!--                                <img alt="" src="/modes/assets/admin/pages/media/blog/5.jpg" class="media-object"-->
-<!--                                     style="width: 60px">-->
-<!--                            </a>-->
-<!--                            <div class="media-body">-->
-<!--                                <h4 class="media-heading">Media heading <span>-->
-<!--                                    17 hours ago / <a href="javascript:;">-->
-<!--                                    Reply </a>-->
-<!--                                    </span>-->
-<!--                                </h4>-->
-<!--                                <p>-->
-<!--                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus-->
-<!--                                    commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.-->
-<!--                                    Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.-->
-<!--                                </p>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        <!--end media-->
-<!--                        <hr>-->
-<!--                        <div class="media">-->
-<!--                            <a href="javascript:;" class="pull-left">-->
-<!--                                <img alt="" src="/modes/assets/admin/pages/media/blog/7.jpg" class="media-object"-->
-<!--                                     style="width: 60px">-->
-<!--                            </a>-->
-<!--                            <div class="media-body">-->
-<!--                                <h4 class="media-heading">Media heading <span>-->
-<!--                                    2 days ago / <a href="javascript:;">-->
-<!--                                    Reply </a>-->
-<!--                                    </span>-->
-<!--                                </h4>-->
-<!--                                <p>-->
-<!--                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus-->
-<!--                                    commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.-->
-<!--                                    Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.-->
-<!--                                </p>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        <!--end media-->
-                    </div>
-                </div>
-<!--                <div class="media">-->
-<!--                    <a href="javascript:;" class="pull-left">-->
-<!--                        <img alt="" src="/modes/assets/admin/pages/media/blog/6.jpg" class="media-object"-->
-<!--                             style="width: 60px">-->
-<!--                    </a>-->
-<!--                    <div class="media-body">-->
-<!--                        <h4 class="media-heading">Media heading <span>-->
-<!--                            July 5,2013 / <a href="javascript:;">-->
-<!--                            Reply </a>-->
-<!--                            </span>-->
-<!--                        </h4>-->
-<!--                        <p>-->
-<!--                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,-->
-<!--                            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem-->
-<!--                            malesuada magna mollis euismod. Donec sed odio dui.-->
-<!--                        </p>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-                <!--我来评论-->
-                <div class="post-comment">
-                    <h3>我来评论</h3>
-                    <form role="form" action="#">
-                        <input type="hidden" th:value="${article.aid}" id="pid"/>
-                        <div class="form-group">
-                            <textarea class="col-md-10 form-control" rows="8" id="context"></textarea>
-                        </div>
-                        <button class="margin-top-20 btn blue" type="submit" onclick="comment()">评论</button>
-                    </form>
-                </div>
-            </div>
             <div class="col-md-3 blog-sidebar">
-                <h3>相关文章</h3>
-                <div class="top-news">
-                    <a href="javascript:;" class="btn red">
-                        <span>
-                        Metronic News </span>
-                        <em>Posted on: April 16, 2013</em>
-                        <em>
-                            <i class="fa fa-tags"></i>
-                            Money, Business, Google </em>
-                        <i class="fa fa-briefcase top-news-icon"></i>
-                    </a>
-                    <a href="javascript:;" class="btn purple">
-                        <span>
-                        Top Destinations </span>
-                        <em>Posted on: April 12, 2013</em>
-                        <em>
-                            <i class="fa fa-tags"></i>
-                            Places, Internet, Google Map </em>
-                        <i class="fa fa-bolt top-news-icon"></i>
-                    </a>
-                </div>
-                <div class="space20">
-                </div>
+
                 <h3>最热标签</h3>
                 <ul class="list-inline sidebar-tags">
                     <li>
@@ -178,6 +34,130 @@
                     </li>
                 </ul>
                 <div class="space20">
+                </div>
+            </div>
+            <div class="col-md-9 article-block">
+                <span style="margin-top:0;font-size: 30px" th:text="${article.title}"></span>
+                <!--文章详情-->
+                <div class="blog-tag-data">
+                    <!--                    <img src="/imgs/haitang.jpg" class="img-responsive" alt="">-->
+                    <div class="row" style="margin-top: 10px;color: #E6400C">
+                        <div class="col-md-8">
+                            <ul class="list-inline blog-tags">
+                                <li>
+                                    <i class="fa fa-tags"></i>
+                                    <span th:each="tag:${article.tags}">
+                                        <a th:text="${tag}"></a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-calendar"></i>
+                                    <span th:text="'发布时间：'+${article.gmtCreate}" style="color: #0C1021"></span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-street-view"></i>
+                                    <span th:text="'阅读数：'+${article.likeCount}" style="color: #0C1021"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <div id="article-view">
+                        <textarea style="width: 100%" th:text="${article.context}"></textarea>
+                    </div>
+                </div>
+                <hr>
+                <!--评论-->
+                <h3 th:text="${article.commentCount}+'个评论'"></h3>
+                <div class="media" th:each="comment:${comments}">
+                    <a href="javascript:;" class="pull-left">
+                        <img alt="" src="/modes/assets/admin/pages/media/blog/9.jpg" class="media-object"
+                             style="width: 50px">
+                    </a>
+                    <div class="media-body" >
+                        <h5 class="media-heading" >
+                            <span th:text="海棠" style="margin-right: 15px"></span>
+                            <span th:text="'回复('+${comment.replayCount}+')'"></span>
+                            <span th:text="${comment.gmtCreate}" style="float: right;font-family: 宋体 ; font-size: 10px;color: #9b99a0"></span>
+                        </h5>
+                        <h4 th:text="${comment.context}">
+                        </h4>
+                        <hr>
+                        <!-- Nested media object -->
+                        <!--                        <div class="media">-->
+                        <!--                            <a href="javascript:;" class="pull-left">-->
+                        <!--                                <img alt="" src="/modes/assets/admin/pages/media/blog/5.jpg" class="media-object"-->
+                        <!--                                     style="width: 60px">-->
+                        <!--                            </a>-->
+                        <!--                            <div class="media-body">-->
+                        <!--                                <h4 class="media-heading">Media heading <span>-->
+                        <!--                                    17 hours ago / <a href="javascript:;">-->
+                        <!--                                    Reply </a>-->
+                        <!--                                    </span>-->
+                        <!--                                </h4>-->
+                        <!--                                <p>-->
+                        <!--                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus-->
+                        <!--                                    commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.-->
+                        <!--                                    Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.-->
+                        <!--                                </p>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--end media-->
+                        <!--                        <hr>-->
+                        <!--                        <div class="media">-->
+                        <!--                            <a href="javascript:;" class="pull-left">-->
+                        <!--                                <img alt="" src="/modes/assets/admin/pages/media/blog/7.jpg" class="media-object"-->
+                        <!--                                     style="width: 60px">-->
+                        <!--                            </a>-->
+                        <!--                            <div class="media-body">-->
+                        <!--                                <h4 class="media-heading">Media heading <span>-->
+                        <!--                                    2 days ago / <a href="javascript:;">-->
+                        <!--                                    Reply </a>-->
+                        <!--                                    </span>-->
+                        <!--                                </h4>-->
+                        <!--                                <p>-->
+                        <!--                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus-->
+                        <!--                                    commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.-->
+                        <!--                                    Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.-->
+                        <!--                                </p>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--end media-->
+                    </div>
+                </div>
+                <!--我来评论-->
+                <div class="post-comment">
+                    <h3>我来评论</h3>
+                    <form role="form" action="#">
+                        <input type="hidden" th:value="${article.aid}" id="pid"/>
+                        <div class="form-group">
+                            <textarea class="col-md-10 form-control" rows="4" id="context"></textarea>
+                        </div>
+                        <button class="margin-top-20 btn blue" type="submit" onclick="comment()" style="float: right;background-color: #E6400C;width: 100px">评论</button>
+                    </form>
+                    <br>
+                </div>
+                <!--相关文章-->
+                <div  >
+                    <h3 style="margin-top: 110px;margin-bottom: 20px">相关文章</h3>
+                    <a style="color: #3e3e3e;text-decoration:none">
+                        <h4>
+                            <b><span>清明上河园</span></b>
+                            <span style="float: right;font-size: 10px">浏览数：456</span>
+                        </h4>
+                        <p>我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</p>
+                        <hr>
+                    </a>
+                    <a style="color: #3e3e3e;text-decoration:none">
+                        <h4>
+                            <b><span>清明上河园</span></b>
+                            <span style="float: right;font-size: 10px">浏览数：456</span>
+                        </h4>
+                        <p>我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</p>
+                        <hr>
+                    </a>
                 </div>
             </div>
         </div>

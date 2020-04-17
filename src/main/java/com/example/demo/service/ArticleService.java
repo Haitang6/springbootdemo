@@ -6,6 +6,7 @@ import com.example.demo.entity.ArticleExample;
 import com.example.demo.entity.Comment;
 import com.example.demo.mapper.ArticleMapper;
 import com.example.demo.utils.DataUtils;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,8 @@ public class ArticleService {
         articleMapper.insert(article);
     }
 
-    public List<ArticleDto> findAll() {
+    public List<ArticleDto> findAll(int pageNum) {
+        PageHelper.startPage(pageNum,2);
         ArticleExample articleExample = new ArticleExample();
         List<Article> articles = articleMapper.selectByExample(articleExample);
         ArrayList<ArticleDto> articleDtos = new ArrayList<>();

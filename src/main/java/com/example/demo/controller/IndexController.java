@@ -4,10 +4,13 @@ import com.example.demo.dto.ArticleDto;
 import com.example.demo.entity.User;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.UserService;
+import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,24 +24,26 @@ public class IndexController {
     ArticleService articleService;
     @Autowired
     UserService userService;
+
     @GetMapping("/")
-    public String index(Model model, HttpServletRequest request) {
+    public String index(Model model, HttpServletRequest request,
+                        @RequestParam(name = "pageNum", required = true, defaultValue = "1") int pageNmu) {
         //通过cookie获取登录态
         Cookie[] cookies = request.getCookies();
-        if (cookies==null){
+        if (cookies == null) {
 
-        }else {
-            for (Cookie cookie:cookies){
+        } else {
+            for (Cookie cookie : cookies) {
                 String name = cookie.getName();
-                if ("token".equals(name)){
+                if ("token".equals(name)) {
                     String tokenValue = cookie.getValue();
                     //如果根据tokenValue能查询到用户，就登录此用户
-//                User user=userService.findByToken(tokenValue);
-                    if (userService.findByToken(tokenValue) == null){
+                    User user = userService.findByToken(tokenValue);
+                    if (user == null) {
                         //请到首页进行登录
-                    }else {
+                    } else {
                         //把此用户放到session域
-                        request.getSession().setAttribute("user", userService.findByToken(tokenValue));
+                        request.getSession().setAttribute("user", user);
                         break;
                     }
                 }
@@ -46,8 +51,9 @@ public class IndexController {
         }
 
         //查询所有文章
-        List<ArticleDto> articleDtos = articleService.findAll();
-        model.addAttribute("articles", articleDtos);
+        List<ArticleDto> articleDtos = articleService.findAll(pageNmu);
+        PageInfo<ArticleDto> pageInfo = new PageInfo<>(articleDtos);
+        model.addAttribute("ArticlePageInfo", pageInfo);
         return "index";
     }
 }

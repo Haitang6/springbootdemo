@@ -1,14 +1,18 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.CommentDto;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.CommentExample;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.CommentMapper;
+import com.example.demo.utils.DataUtils;
 import com.mysql.cj.Session;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -30,16 +34,22 @@ public class CommentService {
             //获取当前登录用户
             User user = (User)request.getSession().getAttribute("user");
             comment.setUid(user.getUid());
-            CommentExample commentExample = new CommentExample();
             commentMapper.insert(comment);
         }
     }
 
-    public List<Comment> findCommentByAid(String aid) {
+    public List<CommentDto> findCommentByAid(String aid) {
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria()
                 .andPidEqualTo(aid);
         List<Comment> comments = commentMapper.selectByExample(commentExample);
-        return comments;
+        List<CommentDto> commentDtos=new ArrayList<>();
+        for (Comment comment:comments){
+            CommentDto commentDto = new CommentDto();
+            BeanUtils.copyProperties(comment,commentDto);
+            commentDto.setGmtCreate(DataUtils.dateToString(comment.getGmtCreate(),"yyyy-MM-dd HH:mm:ss"));
+            commentDtos.add(commentDto);
+        }
+        return commentDtos;
     }
 }
