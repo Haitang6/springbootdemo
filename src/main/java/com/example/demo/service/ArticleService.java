@@ -5,6 +5,7 @@ import com.example.demo.entity.Article;
 import com.example.demo.entity.ArticleExample;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.CommentExample;
+import com.example.demo.mapper.ArticleExtMapper;
 import com.example.demo.mapper.ArticleMapper;
 import com.example.demo.mapper.CommentMapper;
 import com.example.demo.utils.DataUtils;
@@ -22,7 +23,10 @@ public class ArticleService {
     @Autowired
     ArticleMapper articleMapper;
     @Autowired
+    ArticleExtMapper articleExtMapper;
+    @Autowired
     CommentMapper commentMapper;
+
     public void insert(Article article) {
         articleMapper.insert(article);
     }
@@ -67,5 +71,12 @@ public class ArticleService {
             articleDto.setCommentCount(comments.size());
             return articleDto;
         }
+    }
+
+    public void incView(String aid) {
+        Article article = new Article();
+        article.setAid(aid);
+        article.setViewCount(1);
+        articleExtMapper.incView(article);
     }
 }

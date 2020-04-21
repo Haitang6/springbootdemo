@@ -13,8 +13,10 @@
                         "context":context,
                         "type":1
                     }),
-                    success:function () {
-                        window.location.reload();
+                    success:function (response) {
+                        if (response.code==200){
+                            window.location.reload();
+                        }
                     },
                     dataType:"json"
                 })

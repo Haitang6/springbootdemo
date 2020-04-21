@@ -1,4 +1,8 @@
 package com.example.demo.repository;
 
-public interface TestRepository {
+import org.springframework.stereotype.Component;
+
+@Component
+public interface TestRepository  {
+
 }

@@ -18,7 +18,7 @@
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
-
+        <!--实体类-->
         <javaModelGenerator targetPackage="com.example.demo.entity" targetProject="src\main\java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>

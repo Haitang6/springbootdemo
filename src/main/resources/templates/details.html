@@ -14,33 +14,17 @@
         });
     </script>
     <script src="/js/comment.js"></script>
+    <link rel="stylesheet" href="/css/mycss.css">
 </head>
 <body class="ecommerce">
 <div th:replace="import::head"></div>
 <div class="page-container" style="padding: 0px">
-    <div class="portlet light" style="padding: 30px 150px 15px 150px">
+    <div class="portlet light " style="padding: 30px 200px 15px 230px">
         <div class="row">
-            <div class="col-md-3 blog-sidebar">
-
-                <h3>TA的个人主页</h3>
-<!--                <ul class="list-inline sidebar-tags">-->
-<!--                    <li>-->
-<!--                        <a href="javascript:;">-->
-<!--                            <i class="fa fa-tags" style="color: red"></i> Apple </a>-->
-<!--                    </li>-->
-<!--                    <li>-->
-<!--                        <a href="javascript:;">-->
-<!--                            <i class="fa fa-tags"></i> Canada </a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--                <div class="space20">-->
-<!--                </div>-->
-            </div>
-            <div class="col-md-9 article-block">
+            <div class="col-md-12 article-block">
                 <span style="margin-top:0;font-size: 30px" th:text="${article.title}"></span>
                 <!--文章详情-->
                 <div class="blog-tag-data">
-                    <!--                    <img src="/imgs/haitang.jpg" class="img-responsive" alt="">-->
                     <div class="row" style="margin-top: 10px;color: #E6400C">
                         <div class="col-md-8">
                             <ul class="list-inline blog-tags">
@@ -55,8 +39,8 @@
                                     <span th:text="'发布时间：'+${article.gmtCreate}" style="color: #0C1021"></span>
                                 </li>
                                 <li>
-                                    <i class="fa fa-street-view"></i>
-                                    <span th:text="'阅读数：'+${article.likeCount}" style="color: #0C1021"></span>
+                                    <i class="fa fa-book"></i>
+                                    <span th:text="'阅读数：'+${article.viewCount}" style="color: #0C1021"></span>
                                 </li>
                             </ul>
                         </div>
@@ -68,7 +52,35 @@
                         <textarea style="width: 100%" th:text="${article.context}"></textarea>
                     </div>
                 </div>
+                <!--点赞 收藏-->
+                <div style=" margin-left: 30px;margin-top: 10px;font-size: 16px">
+                    <ul class="list-inline blog-tags">
+                        <a>
+                            <li>
+                                <i class="fa fa-thumbs-o-up"></i>
+                                <span style="color: #0C1021">点赞 21</span>
+                            </li>
+                        </a>
+
+                        <a>
+                            <li>
+                                <i class="fa fa-star-o"></i>
+                                <span  style="color: #0C1021">收藏 15</span>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
                 <hr>
+                <!--作者信息-->
+                <div class="writer">
+                    <div >
+                        <span style="font-size: 20px;margin-bottom: 5px" th:text="${creator.petName}"></span>
+                        <p th:text="${creator.phoneNumber}"></p>
+                    </div>
+                    <button>关注</button>
+                    <button>私聊</button>
+                </div>
+                <hr/>
                 <!--评论-->
                 <h3 th:text="${article.commentCount}+'个评论'"></h3>
                 <div class="media" th:each="comment:${comments}">

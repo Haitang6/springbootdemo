@@ -14,6 +14,5 @@ mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 时间追踪 pages (1) 消息通知 pages todo 日历上建立日程 标签 tag pages calender 首页或者个人页 pages blog  详情 评论 pages blog post /news view
 一天的时间完成顺序 pages old timeline
 
-
-
-海棠很棒
+问题
+评论功能 不能刷新 response

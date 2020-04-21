@@ -9,6 +9,7 @@ import java.util.Date;
 public class ArticleDto {
 
     private String aid;
+    private String Uid;
     private String title;
     private String context;
     private String type;
@@ -17,6 +18,23 @@ public class ArticleDto {
     private String gmtCreate;
     private Integer commentCount;
     private Integer likeCount;
+    private Integer viewCount;
+
+    public String getUid() {
+        return Uid;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
+    }
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
 
     public String getAid() {
         return aid;

@@ -42,7 +42,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                 }
             }
         }
-        System.out.println("拦截器执行了。。。");
         return true;
     }
 

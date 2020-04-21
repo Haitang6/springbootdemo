@@ -14,6 +14,14 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
+    public User findUserByUid(String uid) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria()
+                .andUidEqualTo(uid);
+        List<User> users = userMapper.selectByExample(userExample);
+        return users.get(0);
+    }
+
     public void register(User user){
         userMapper.insert(user);
     }
