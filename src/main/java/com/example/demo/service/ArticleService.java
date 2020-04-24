@@ -1,20 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ArticleDto;
-import com.example.demo.entity.Article;
-import com.example.demo.entity.ArticleExample;
-import com.example.demo.entity.Comment;
-import com.example.demo.entity.CommentExample;
-import com.example.demo.mapper.ArticleExtMapper;
-import com.example.demo.mapper.ArticleMapper;
-import com.example.demo.mapper.CommentMapper;
+import com.example.demo.entity.*;
+import com.example.demo.mapper.*;
 import com.example.demo.utils.DataUtils;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +23,8 @@ public class ArticleService {
     ArticleExtMapper articleExtMapper;
     @Autowired
     CommentMapper commentMapper;
+    @Autowired
+    UserArticleMapper userArticleMapper;
 
     public void insert(Article article) {
         articleMapper.insert(article);
@@ -51,10 +50,12 @@ public class ArticleService {
     }
 
     public ArticleDto findByAid(String aid) {
+        //文章信息
         ArticleExample articleExample = new ArticleExample();
         articleExample.createCriteria()
                 .andAidEqualTo(aid);
         List<Article> articles = articleMapper.selectByExample(articleExample);
+        //文章下面的评论信息
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria()
                 .andPidEqualTo(aid);
@@ -72,11 +73,51 @@ public class ArticleService {
             return articleDto;
         }
     }
-
+    //增加浏览数
     public void incView(String aid) {
         Article article = new Article();
         article.setAid(aid);
         article.setViewCount(1);
         articleExtMapper.incView(article);
+    }
+    //点赞或者收藏功能
+    public void userAndArticleInc(UserArticle userArticle, HttpServletRequest request) {
+        //关联关系添加到表中
+        User user=(User) request.getSession().getAttribute("user");
+        userArticle.setUid(user.getUid());
+        userArticleMapper.insert(userArticle);
+        //更改article数据库中的数据
+        Article article = new Article();
+        article.setAid(userArticle.getAid());
+        if (userArticle.getType()==1){
+            article.setLikeCount(1);
+            articleExtMapper.incLikeCount(article);
+        }else if(userArticle.getType()==2){
+            article.setCollectCount(1);
+            articleExtMapper.incCollectCount(article);
+        }
+
+    }
+    //取消点赞或者收藏功能
+    public void userAndArticleDel(UserArticle userArticle, HttpServletRequest request) {
+        //关联表中删除数据
+        User user=(User) request.getSession().getAttribute("user");
+        userArticle.setUid(user.getUid());
+        UserArticleExample userArticleExample = new UserArticleExample();
+        userArticleExample.createCriteria()
+                .andAidEqualTo(userArticle.getAid())
+                .andTypeEqualTo(userArticle.getType())
+                .andUidEqualTo(user.getUid());
+        userArticleMapper.deleteByExample(userArticleExample);
+        //更改article数据库中的数据
+        Article article = new Article();
+        article.setAid(userArticle.getAid());
+        if (userArticle.getType()==1){
+            article.setLikeCount(1);
+            articleExtMapper.decLikeCount(article);
+        }else if(userArticle.getType()==2){
+            article.setCollectCount(1);
+            articleExtMapper.decCollectCount(article);
+        }
     }
 }

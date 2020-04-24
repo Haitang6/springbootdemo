@@ -62,9 +62,9 @@
 .radio-list{
     margin-left: 20px;
 }
-.writer button{
-    width: 80px;
-    height: 30px;
+.writer label{
+    width: 100px;
+    height: 35px;
     margin-right: 20px;
     margin-top: 20px;
     border: 1px solid red ;
@@ -73,9 +73,8 @@
     color: red;
     float: right;
 }
-.writer button:hover{
-    background-color: orangered;
-    color: white;
+.writer label:hover{
+    color: orange;
 }
 .writer div{
     display: inline-block;

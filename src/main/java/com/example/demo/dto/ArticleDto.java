@@ -19,6 +19,15 @@ public class ArticleDto {
     private Integer commentCount;
     private Integer likeCount;
     private Integer viewCount;
+    private Integer collectCount;
+
+    public Integer getCollectCount() {
+        return collectCount;
+    }
+
+    public void setCollectCount(Integer collectCount) {
+        this.collectCount = collectCount;
+    }
 
     public String getUid() {
         return Uid;

@@ -19,12 +19,41 @@
     <result column="VIEW_COUNT" jdbcType="INTEGER" property="viewCount" />
   </resultMap>
 
-
+<!--添加浏览量-->
   <update id="incView" parameterType="com.example.demo.entity.Article">
     update ARTICLE
     set
     VIEW_COUNT = VIEW_COUNT + #{viewCount,jdbcType=INTEGER}
     where aid = #{aid}
-    </update>
+  </update>
+  <!--添加点赞数量-->
+  <update id="incLikeCount" parameterType="com.example.demo.entity.Article">
+    update ARTICLE
+    set
+    LIKE_COUNT = LIKE_COUNT + #{likeCount,jdbcType=INTEGER}
+    where aid = #{aid}
+  </update>
+  <!--添加收藏数量-->
+  <update id="incCollectCount" parameterType="com.example.demo.entity.Article">
+    update ARTICLE
+    set
+    COLLECT_COUNT = COLLECT_COUNT + #{collectCount,jdbcType=INTEGER}
+    where aid = #{aid}
+  </update>
+  <!--减少点赞数量-->
+  <update id="decLikeCount" parameterType="com.example.demo.entity.Article">
+    update ARTICLE
+    set
+    LIKE_COUNT = LIKE_COUNT - #{likeCount,jdbcType=INTEGER}
+    where aid = #{aid}
+  </update>
+  <!--减少收藏数量-->
+  <update id="decCollectCount" parameterType="com.example.demo.entity.Article">
+    update ARTICLE
+    set
+    COLLECT_COUNT = COLLECT_COUNT - #{collectCount,jdbcType=INTEGER}
+    where aid = #{aid}
+  </update>
+
 
 </mapper>
