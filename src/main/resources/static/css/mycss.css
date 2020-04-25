@@ -81,3 +81,16 @@
     height: 50px;
     width: 400px;
 }
+.todo-project-list ul li a{
+    font-size: 16px;
+    color: #3f4e6c;
+}
+.todo-project-list .nav li a .badge{
+    background-color: #e84d1ce3 !important;
+}
+.todo-project-list .nav-pills > li.active > a{
+    background-color: #e84d1ce3 !important;
+}
+.list-group-item.active>.badge, .nav-pills>.active>a>.badge{
+    color: white !important;
+}

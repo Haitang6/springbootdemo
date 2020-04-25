@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -188,5 +189,48 @@ public class UserService {
             return "false";
         }
 
+    }
+    //根据当前登陆者查询文章
+    public List<Article> findArticle(User user, String isFinished) {
+        ArticleExample articleExample = new ArticleExample();
+        articleExample.createCriteria()
+                .andUidEqualTo(user.getUid())
+                .andIsFinishedEqualTo(isFinished);
+        List<Article> articles = articleMapper.selectByExample(articleExample);
+        return articles;
+    }
+    //查找我的关注
+    public List<User> findUploader(User user) {
+        UpFanExample upFanExample = new UpFanExample();
+        upFanExample.createCriteria()
+                .andFanidEqualTo(user.getUid());
+        List<UpFan> uploader = upFanMapper.selectByExample(upFanExample);
+        List<User> uploaders=new ArrayList<>();
+        //获取uploader的个人信息
+        for (UpFan upFan:uploader){
+            UserExample userExample = new UserExample();
+            userExample.createCriteria()
+                    .andUidEqualTo(upFan.getUpid());
+            List<User> users = userMapper.selectByExample(userExample);
+            uploaders.add(users.get(0));
+        }
+        return uploaders;
+    }
+    //查找我的粉丝
+    public List<User> findFan(User user) {
+        UpFanExample upFanExample = new UpFanExample();
+        upFanExample.createCriteria()
+                .andUpidEqualTo(user.getUid());
+        List<UpFan> fan = upFanMapper.selectByExample(upFanExample);
+        List<User> fans=new ArrayList<>();
+        //获取粉丝的个人信息
+        for (UpFan upFan:fan){
+            UserExample userExample = new UserExample();
+            userExample.createCriteria()
+                    .andUidEqualTo(upFan.getFanid());
+            List<User> users = userMapper.selectByExample(userExample);
+            fans.add(users.get(0));
+        }
+        return fans;
     }
 }

@@ -57,4 +57,8 @@ public class IndexController {
         model.addAttribute("ArticlePageInfo", pageInfo);
         return "index";
     }
+    @GetMapping("/test")
+    public String test(){
+        return "test";
+    }
 }

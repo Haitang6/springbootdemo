@@ -18,6 +18,7 @@
     <link href="/modes/assets/frontend/layout/css/style-responsive.css" rel="stylesheet">
     <link href="/modes/assets/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">
     <link href="/modes/assets/frontend/layout/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/mycss.css">
     <script src="/modes/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 
 </head>
@@ -45,7 +46,7 @@
                         <li><a href="/publishHtml">发布</a></li>
                         <li><a href="#">清单</a></li>
                         <li><a href="#">驴友</a></li>
-                        <li th:if="${session.user!=null}"><a href="#" th:text="${session.user.petName}"></a></li>
+                        <li th:if="${session.user!=null}"><a href="/myself" th:text="${session.user.petName}"></a></li>
                         <li th:if="${session.user==null}"><a href="/loginHtml" th:text="登录"></a></li>
                     </ul>
                 </div>

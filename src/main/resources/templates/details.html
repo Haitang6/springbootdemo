@@ -113,8 +113,8 @@
                     <hr/>
                 </div>
                 <!--评论-->
-                <h3 th:text="${article.commentCount}+'个评论'"></h3>
-                <div class="media" th:each="comment:${comments}">
+                <h3 th:text="${article.commentCount}+'个评论'" style="margin-bottom: 20px"></h3>
+                <div class="media" th:each="comment:${comments}" style="margin-top: 0px">
                     <a href="javascript:;" class="pull-left">
                         <img alt="" src="/modes/assets/admin/pages/media/blog/9.jpg" class="media-object"
                              style="width: 50px">
@@ -127,7 +127,7 @@
                         </h5>
                         <h4 th:text="${comment.context}">
                         </h4>
-                        <hr>
+                        <hr style="margin-top: 0px"/>
                         <!-- Nested media object -->
                         <!--                        <div class="media">-->
                         <!--                            <a href="javascript:;" class="pull-left">-->
