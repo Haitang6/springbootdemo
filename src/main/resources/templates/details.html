@@ -60,29 +60,28 @@
                             <li >
                                 <label th:if="${isLike=='false'}"><!--如果读者当时没有给这篇文章点赞-->
                                     <input type="hidden" th:value="${article.aid}" class="aid"/>
-                                    <input type="checkbox" onclick="like" class="like"  style="visibility: hidden"    />
+                                    <input type="checkbox" class="like"  style="visibility: hidden"    />
                                     <i class="fa fa-thumbs-o-up" id="no-fa-thumb"></i>
                                     <span style="color: #0C1021" th:text="'点赞'+${article.likeCount}"></span>
                                 </label>
                                 <label th:if="${isLike=='true'}"><!--如果读者已经给这篇文章点过赞-->
                                     <input type="hidden" th:value="${article.aid}" class="aid"/>
-                                    <input type="checkbox" onclick="like" class="like"  style="visibility: hidden" checked="checked"/>
+                                    <input type="checkbox" class="like"  style="visibility: hidden" checked="checked"/>
                                     <i class="fa fa-thumbs-up" id="yes-fa-thumb"></i>
                                     <span style="color: #0C1021" th:text="'点赞'+${article.likeCount}"></span>
                                 </label>
-
                             </li>
                         </a>
 
                         <a>
                             <li>
                                 <label th:if="${isCollect=='false'}"><!--读者没有收藏当前文章-->
-                                    <input type="checkbox" onclick="collect" class="collect"  style="visibility: hidden"  />
+                                    <input type="checkbox" class="collect"  style="visibility: hidden"  />
                                     <i class="fa fa-star-o" id="no-fa-star"></i>
                                     <span  style="color: #0C1021" th:text="'收藏'+${article.collectCount}"></span>
                                 </label>
                                 <label th:if="${isCollect=='true'}"><!--读者已经收藏当前文章-->
-                                    <input type="checkbox" onclick="collect" class="collect"  style="visibility: hidden" checked="checked" />
+                                    <input type="checkbox" class="collect"  style="visibility: hidden" checked="checked" />
                                     <i class="fa fa-star" id="yes-fa-star"></i>
                                     <span  style="color: #0C1021" th:text="'收藏'+${article.collectCount}"></span>
                                 </label>
@@ -91,22 +90,28 @@
                     </ul>
                 </div>
                 <hr>
-                <!--作者信息-->
-                <div class="writer">
+                <!--作者信息，如果当前文章的作者不是当前浏览者就显示作者信息-->
+                <div class="writer" th:if="${isAuthor=='false'}">
                     <div >
                         <span style="font-size: 20px;margin-bottom: 5px" th:text="${creator.petName}"></span>
                         <p th:text="${creator.phoneNumber}"></p>
                     </div>
-                    <label class="btn">
-                        <input type="checkbox" onclick="attention" id="attention"  style="display: none"  />
+                    <input type="hidden" th:value="${creator.uid}" id="upId"/>
+                    <label class="btn" th:if="${isAttention=='false'}"><!--读者没有关注当前文章的作者时-->
+                        <input type="checkbox" class="attention"  style="display: none"  />
                         <i class="fa fa-plus" id="plus"></i>
-                        <input type="text" value="关注" style="border: none;width: 50px"id="att"/>
+                        <input type="text" value="关注" style="border: none;width: 50px"id="no-attention"/>
+                    </label>
+                    <label class="btn" th:if="${isAttention=='true'}"><!--读者已经关注当前文章的作者时-->
+                        <input type="checkbox" class="attention"  style="display: none" checked="checked"  />
+                        <i class="fa fa-check" id="check"></i>
+                        <input type="text" value="已关注" style="border: none;width: 50px"id="yes-attention"/>
                     </label>
                     <label class="btn">
                         <span>私聊</span>
                     </label>
+                    <hr/>
                 </div>
-                <hr/>
                 <!--评论-->
                 <h3 th:text="${article.commentCount}+'个评论'"></h3>
                 <div class="media" th:each="comment:${comments}">

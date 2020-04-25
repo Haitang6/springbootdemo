@@ -1,16 +1,14 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.User;
-import com.example.demo.entity.UserArticle;
-import com.example.demo.entity.UserArticleExample;
-import com.example.demo.entity.UserExample;
-import com.example.demo.mapper.UserArticleMapper;
-import com.example.demo.mapper.UserMapper;
+import com.example.demo.entity.*;
+import com.example.demo.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -19,6 +17,12 @@ public class UserService {
     UserMapper userMapper;
     @Autowired
     UserArticleMapper userArticleMapper;
+    @Autowired
+    UpFanMapper upFanMapper;
+    @Autowired
+    ArticleMapper articleMapper;
+    @Autowired
+    UserExtMapper userExtMapper;
 
     public User findUserByUid(String uid) {
         UserExample userExample = new UserExample();
@@ -29,6 +33,11 @@ public class UserService {
     }
 
     public void register(User user){
+        user.setGmtCreate(new Date());
+        user.setUid(UUID.randomUUID().toString());
+        user.setUpCount(0);
+        user.setFanCount(0);
+        user.setArticleCount(0);
         userMapper.insert(user);
     }
 
@@ -104,5 +113,80 @@ public class UserService {
         }else {
             return "true";
         }
+    }
+    //文章的作者是否被当前读者关注
+    public String idAttention(String aid, HttpServletRequest request) {
+        //根据当前文章获取文章的作者
+        ArticleExample articleExample = new ArticleExample();
+        articleExample.createCriteria()
+                .andAidEqualTo(aid);
+        List<Article> articles = articleMapper.selectByExample(articleExample);
+        //获取当前登陆者
+        User user = (User)request.getSession().getAttribute("user");
+        // 查询up_fan数据库
+        UpFanExample upFanExample = new UpFanExample();
+        upFanExample.createCriteria()
+                .andUpidEqualTo(articles.get(0).getUid())
+                .andFanidEqualTo(user.getUid());
+        List<UpFan> upFans = upFanMapper.selectByExample(upFanExample);
+        if (upFans.size()==0){
+            return "false";
+        }else {
+            return "true";
+        }
+    }
+
+    public void upAndFanInc(UpFan upFan, HttpServletRequest request) {
+        //关注功能实现，添加到数据库。
+        User user=(User)request.getSession().getAttribute("user");
+        upFan.setFanid(user.getUid());
+        upFanMapper.insert(upFan);
+        //up主的粉丝+1
+        User uploader = new User();
+        uploader.setFanCount(1);
+        uploader.setUid(upFan.getUpid());
+        userExtMapper.incFanCount(uploader);
+        //当前的读者的关注人数+1
+        User fan=new User();
+        fan.setUid(user.getUid());
+        fan.setUpCount(1);
+        userExtMapper.incUpCount(fan);
+    }
+
+    public void upAndFanDel(UpFan upFan, HttpServletRequest request) {
+        //取消关注，删除数据库信息。
+        User user=(User)request.getSession().getAttribute("user");
+        UpFanExample upFanExample = new UpFanExample();
+        upFanExample.createCriteria()
+                .andFanidEqualTo(user.getUid())
+                .andUpidEqualTo(upFan.getUpid());
+        upFanMapper.deleteByExample(upFanExample);
+        //up主的粉丝-1
+        User uploader = new User();
+        uploader.setFanCount(1);
+        uploader.setUid(upFan.getUpid());
+        userExtMapper.decFanCount(uploader);
+        //当前的读者关注的人数-1
+        User fan=new User();
+        fan.setUid(user.getUid());
+        fan.setUpCount(1);
+        userExtMapper.decUpCount(fan);
+    }
+
+
+    public String isAuthor(String aid,HttpServletRequest request) {
+        //当前文章的作者
+        ArticleExample articleExample = new ArticleExample();
+        articleExample.createCriteria()
+                .andAidEqualTo(aid);
+        List<Article> articles = articleMapper.selectByExample(articleExample);
+        //当前浏览者
+        User user=(User) request.getSession().getAttribute("user");
+        if (articles.get(0).getUid().equals(user.getUid())){
+            return "true";
+        }else {
+            return "false";
+        }
+
     }
 }

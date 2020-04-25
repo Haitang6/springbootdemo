@@ -32,15 +32,8 @@ public class ArticleController {
 
     @PostMapping("/publishArticle")
     public String publishArticle(Article article, HttpServletRequest request) {
-        article.setAid(UUID.randomUUID().toString());
-        article.setGmtCreate(new Date());
-        article.setCommentCount(0);
-        article.setLikeCount(0);
-        article.setViewCount(0);
-        article.setIsFinished("1");
-        User user = (User) request.getSession().getAttribute("user");
-        article.setUid(user.getUid());
-        articleService.insert(article);
+
+        articleService.insert(article,request);
         return "redirect:/";
     }
     @GetMapping("/details/{aid}")
@@ -55,11 +48,17 @@ public class ArticleController {
         String isLike=userService.isLike(aid,request);
         //判断文章是否被当前读者收藏
         String isCollect=userService.isCollect(aid,request);
+        //判断作者是否被当前读者关注
+        String isAttention=userService.idAttention(aid,request);
+        //判断当前文章的作者是否为当前的浏览者
+        String isAuthor=userService.isAuthor(aid,request);
         model.addAttribute("article",articleDto);
         model.addAttribute("comments",commentDtos);
         model.addAttribute("creator",user);
         model.addAttribute("isLike",isLike);
         model.addAttribute("isCollect",isCollect);
+        model.addAttribute("isAttention",isAttention);
+        model.addAttribute("isAuthor",isAuthor);
         return "details";
     }
     @ResponseBody

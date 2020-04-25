@@ -10,7 +10,6 @@ window.onload = function () {
     $(".like").click(
         function () {
             if ($(".like").is(":checked")){
-                alert("点赞")
                 $("#no-fa-thumb").addClass("fa-thumbs-up");
                 var aid=$(".aid").val();
                 $.ajax({
@@ -29,7 +28,6 @@ window.onload = function () {
                     dataType:"json"
                 })
             }else {
-                alert("取消点赞")
                 $("#yes-fa-thumb").removeClass("fa-thumbs-up");
                 $("#yes-fa-thumb").addClass("fa-thumbs-o-up");
                 var aid=$(".aid").val();
@@ -97,16 +95,46 @@ window.onload = function () {
         }
     )
     //关注
-    $("#attention").click(
+    $(".attention").click(
         function () {
-            if ($("#attention").is(":checked")){
+            if ($(".attention").is(":checked")){
                 $("#plus").addClass("fa-check");
                 $("#plus").removeClass("fa-plus");
-                $("#att").val("已关注");
+                $("#no-attention").val("已关注");
+                var upId=$("#upId").val();
+                $.ajax({
+                    type:"POST",
+                    url:"/upAndFanInc",
+                    contentType:"application/json",
+                    data:JSON.stringify({
+                        "upid":upId,
+                    }),
+                    success:function (response) {
+                        if (response.code==200){
+                            window.location.reload();
+                        }
+                    },
+                    dataType:"json"
+                })
             }else {
-                $("#plus").removeClass("fa-check");
-                $("#plus").addClass("fa-plus");
-                $("#att").val("关注");
+                $("#check").removeClass("fa-check");
+                $("#check").addClass("fa-plus");
+                $("#yes-attention").val("关注");
+                var upId=$("#upId").val();
+                $.ajax({
+                    type:"POST",
+                    url:"/upAndFanDel",
+                    contentType:"application/json",
+                    data:JSON.stringify({
+                        "upid":upId,
+                    }),
+                    success:function (response) {
+                        if (response.code==200){
+                            window.location.reload();
+                        }
+                    },
+                    dataType:"json"
+                })
             }
         }
     )

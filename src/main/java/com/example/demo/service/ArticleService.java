@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ArticleService {
@@ -26,7 +28,16 @@ public class ArticleService {
     @Autowired
     UserArticleMapper userArticleMapper;
 
-    public void insert(Article article) {
+    public void insert(Article article,HttpServletRequest request) {
+        article.setAid(UUID.randomUUID().toString());
+        article.setGmtCreate(new Date());
+        article.setCommentCount(0);
+        article.setLikeCount(0);
+        article.setViewCount(0);
+        article.setCollectCount(0);
+        article.setIsFinished("1");
+        User user = (User) request.getSession().getAttribute("user");
+        article.setUid(user.getUid());
         articleMapper.insert(article);
     }
 
