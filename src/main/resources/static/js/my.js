@@ -1,11 +1,33 @@
 window.onload = function () {
-    //发布页面整合并提交from表单
+    //发布页面整合并提交from表单,发布文章
     $("#send").click(
         function () {
             $("#real_title").val($("#title").val());
             $("#real_context").val($("#context").val());
         }
     );
+    $("#save-article").click(
+        function () {
+             var title=$("#title").val();
+             var context=$("#context").val();
+            $.ajax({
+                type:"POST",
+                url:"/unFinishedArticle",
+                contentType:"application/json",
+                data:JSON.stringify({
+                    "title":title,
+                    "context":context,
+                }),
+                success:function (response) {
+                    if (response.code==200){
+                        window.location.href="/"
+                    }
+                },
+                dataType:"json"
+            })
+
+        }
+    )
     //点赞
     $(".like").click(
         function () {

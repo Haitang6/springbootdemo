@@ -38,7 +38,8 @@ public class UserService {
         user.setUid(UUID.randomUUID().toString());
         user.setUpCount(0);
         user.setFanCount(0);
-        user.setArticleCount(0);
+        user.setFinishedArticleCount(0);
+        user.setUnfinishedArticleCount(0);
         userMapper.insert(user);
     }
 

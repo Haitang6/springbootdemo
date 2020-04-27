@@ -27,18 +27,71 @@ public class ArticleService {
     CommentMapper commentMapper;
     @Autowired
     UserArticleMapper userArticleMapper;
+    @Autowired
+    UserExtMapper userExtMapper;
 
     public void insert(Article article,HttpServletRequest request) {
+        if (StringUtils.isNotBlank(article.getAid())){
+            //重写草稿箱中文文章
+            article.setGmtCreate(new Date());
+            article.setCommentCount(0);
+            article.setLikeCount(0);
+            article.setViewCount(0);
+            article.setCollectCount(0);
+            article.setIsFinished("1");
+            User user = (User) request.getSession().getAttribute("user");
+            article.setUid(user.getUid());
+            //更新数据库
+            ArticleExample articleExample = new ArticleExample();
+            articleExample.createCriteria()
+                    .andAidEqualTo(article.getAid());
+            articleMapper.updateByExample(article,articleExample);
+            //用户未完成文章数量-1
+            User user1 = new User();
+            user1.setUid(user.getUid());
+            user1.setUnfinishedArticleCount(1);
+            userExtMapper.decUnfinishedArticleCount(user1);
+            //用户完成数量+1
+            user1.setFinishedArticleCount(1);
+            userExtMapper.incFinishArticleCount(user1);
+
+        }else {
+            //发布新的文章
+            article.setAid(UUID.randomUUID().toString());
+            article.setGmtCreate(new Date());
+            article.setCommentCount(0);
+            article.setLikeCount(0);
+            article.setViewCount(0);
+            article.setCollectCount(0);
+            article.setIsFinished("1");
+            User user = (User) request.getSession().getAttribute("user");
+            article.setUid(user.getUid());
+            //插入数据
+            articleMapper.insert(article);
+            //用户发布文章数+1
+            User user1 = new User();
+            user1.setUid(user.getUid());
+            user1.setFinishedArticleCount(1);
+            userExtMapper.incFinishArticleCount(user1);
+        }
+
+    }
+
+    //保存草稿
+    public void insertUnfinished(Article article, HttpServletRequest request) {
+        //草稿内容插入到数据库
         article.setAid(UUID.randomUUID().toString());
         article.setGmtCreate(new Date());
-        article.setCommentCount(0);
-        article.setLikeCount(0);
-        article.setViewCount(0);
-        article.setCollectCount(0);
-        article.setIsFinished("1");
+        article.setIsFinished("0");
         User user = (User) request.getSession().getAttribute("user");
         article.setUid(user.getUid());
         articleMapper.insert(article);
+        //增加用的为未完成文章数量
+        User user1 = new User();
+        user1.setUid(user.getUid());
+        user1.setUnfinishedArticleCount(1);
+        userExtMapper.incUnfinishedArticleCount(user1);
+
     }
 
     public List<ArticleDto> findAll(int pageNum) {
@@ -60,6 +113,7 @@ public class ArticleService {
         return articleDtos;
     }
 
+    //根据aid查询文章内容
     public ArticleDto findByAid(String aid) {
         //文章信息
         ArticleExample articleExample = new ArticleExample();
@@ -131,4 +185,17 @@ public class ArticleService {
             articleExtMapper.decCollectCount(article);
         }
     }
+
+    //重写草稿箱
+    public Article reWrite(String aid) {
+        //根据aid查询内容
+        ArticleExample articleExample = new ArticleExample();
+        articleExample.createCriteria()
+                .andAidEqualTo(aid);
+        List<Article> articles = articleMapper.selectByExample(articleExample);
+        return articles.get(0);
+
+    }
+
+
 }

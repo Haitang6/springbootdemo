@@ -46,13 +46,14 @@ public class UserController {
         }
     }
 
+    //注册
     @PostMapping("/register")
     public String register(User user) {
-
         userService.register(user);
         return "redirect:/loginHtml";
     }
 
+    //重置密码
     @PostMapping("/reset")
     public String resetPwd(User user) {
         userService.resetPwd(user);
@@ -89,6 +90,7 @@ public class UserController {
         model.addAttribute("articlesUnFinished",articlesUnFinished);
         model.addAttribute("uploaders",uploaders);
         model.addAttribute("fans",fans);
+        model.addAttribute("user",user);
         return "myself";
     }
 
@@ -108,7 +110,9 @@ public class UserController {
     }
 
     @GetMapping("/publishHtml")
-    public String prePublish() {
+    public String prePublish(Model model) {
+        Article article = new Article();
+        model.addAttribute("article",article);
         return "publish";
     }
 

@@ -47,7 +47,27 @@
     FAN_COUNT = FAN_COUNT - #{fanCount,jdbcType=INTEGER}
     where uid = #{uid}
   </update>
-
+  <!--增加完成文章数量-->
+  <update id="incFinishArticleCount" parameterType="com.example.demo.entity.User">
+    update USER
+    set
+    FINISHED_ARTICLE_COUNT=FINISHED_ARTICLE_COUNT + #{finishedArticleCount,jdbcType=INTEGER}
+    where uid = #{uid}
+  </update>
+  <!--减少未完成文章数量-->
+  <update id="decUnfinishedArticleCount" parameterType="com.example.demo.entity.User">
+    update USER
+    set
+    UNFINISHED_ARTICLE_COUNT=UNFINISHED_ARTICLE_COUNT - #{unfinishedArticleCount,jdbcType=INTEGER}
+    where uid = #{uid}
+  </update>
+  <!--增加未完成文章数量-->
+  <update id="incUnfinishedArticleCount" parameterType="com.example.demo.entity.User">
+    update USER
+    set
+    UNFINISHED_ARTICLE_COUNT=UNFINISHED_ARTICLE_COUNT + #{unfinishedArticleCount,jdbcType=INTEGER}
+    where uid = #{uid}
+  </update>
 
 
 </mapper>

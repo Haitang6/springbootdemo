@@ -10,4 +10,14 @@ public interface UserExtMapper {
     void decFanCount(User uploader);
 
     void decUpCount(User fan);
+
+    void incFinishArticleCount(User user);
+
+    void decFinishArticleCount(User user);
+
+    void incUnfinishedArticleCount(User user);
+
+    void decUnfinishedArticleCount(User user);
+
+
 }

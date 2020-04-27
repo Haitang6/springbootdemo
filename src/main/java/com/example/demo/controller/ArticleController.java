@@ -30,11 +30,25 @@ public class ArticleController {
     @Autowired
     UserService userService;
 
+    //发布文章或者重写草稿箱文章
     @PostMapping("/publishArticle")
     public String publishArticle(Article article, HttpServletRequest request) {
-
         articleService.insert(article,request);
         return "redirect:/";
+    }
+    //草稿内容存入到数据库
+    @PostMapping("/unFinishedArticle")
+    @ResponseBody
+    public Object unFinishedArticle(@RequestBody Article article ,HttpServletRequest request) {
+        articleService.insertUnfinished(article,request);
+        return ResultDto.success();
+    }
+    //重写草稿箱内容
+    @GetMapping("/reWrite/{aid}")
+    public String reWrite(@PathVariable String aid, Model model) {
+        Article article = articleService.reWrite(aid);
+        model.addAttribute("article",article);
+        return "publish";
     }
     @GetMapping("/details/{aid}")
     public String details(@PathVariable String aid, Model model,HttpServletRequest request) {

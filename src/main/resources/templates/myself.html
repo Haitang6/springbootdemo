@@ -45,19 +45,19 @@
                         <ul class="nav nav-pills nav-stacked">
                             <li>
                                 <a data-toggle="tab" href="#tab1">
-                                    <span class="badge badge-success"> 6 </span>我的文章</a>
+                                    <span class="badge badge-success"th:text="${user.finishedArticleCount}">  </span>我的文章</a>
                             </li>
                             <li>
                                 <a data-toggle="tab" href="#tab2">
-                                    <span class="badge badge-success"> 6 </span>草稿箱</a>
+                                    <span class="badge badge-success" th:text="${user.unfinishedArticleCount}">  </span>草稿箱</a>
                             </li>
                             <li>
                                 <a data-toggle="tab" href="#tab3">
-                                    <span class="badge badge-success"> 6 </span>我的粉丝</a>
+                                    <span class="badge badge-success" th:text="${user.fanCount}">  </span>我的粉丝</a>
                             </li>
                             <li>
                                 <a data-toggle="tab" href="#tab4">
-                                    <span class="badge badge-success"> 6 </span>我的关注</a>
+                                    <span class="badge badge-success" th:text="${user.upCount}">  </span>我的关注</a>
                             </li>
                         </ul>
                     </div>
@@ -110,7 +110,7 @@
                                                     </div>
                                                     <div class="booking-info">
                                                         <h2>
-                                                            <a href="javascript:;" th:text="${article.title}" th:href="@{'/details/'+${article.aid}}"></a>
+                                                            <a th:text="${article.title}" th:href="@{'/reWrite/'+${article.aid}}"></a>
                                                         </h2>
                                                         <div th:id="${article.getAid()} + 'unFinished'" style="height:90px ;width:550px;padding:0px;overflow:hidden;text-overflow:ellipsis;">
                                                             <textarea style="width:70%" th:text="${article.getContext()}"></textarea>

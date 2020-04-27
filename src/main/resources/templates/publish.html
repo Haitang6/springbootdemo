@@ -36,18 +36,18 @@
             });
         });
     </script>
-    <script src="editormd/editormd.min.js"></script>
+    <script src="/editormd/editormd.min.js"></script>
 </head>
 <body>
 <div>
     <div class="title-head">
         <label><i class="fa fa-arrow-left"></i>文章管理</label>
-        <input class="title" id="title" placeholder="请输入标题">
-        <button type="submit" th:text="保存草稿" class="btn-save"></button>
+        <input class="title" id="title" placeholder="请输入标题" th:value="${article.title}">
+        <button type="submit" th:text="保存草稿" class="btn-save" id="save-article"></button>
         <button th:text="发布文章" class="btn-publish" id="send" data-toggle="modal" data-target="#myModal"></button>
     </div>
     <div id="editor">
-        <textarea id="context"></textarea>
+        <textarea id="context" th:text="${article.context}"></textarea>
     </div>
 </div>
 <!--模态框-->
@@ -66,6 +66,7 @@
                 <form method="post" action="/publishArticle">
                     <input th:type="hidden" name="title" id="real_title"/>
                     <input th:type="hidden" name="context" id="real_context"/>
+                    <input th:type="hidden" name="aid" th:value="${article.aid}"/>
                     <div class="form-group">
                         <label>文章类型</label>
                         <select class="form-control" name="type">
