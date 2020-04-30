@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.dto.ArticleDto;
 import com.example.demo.dto.ArticleInDto;
 import com.example.demo.entity.*;
+import com.example.demo.enums.ArticleStatusEnum;
+import com.example.demo.enums.UserArticleTypeEnum;
 import com.example.demo.mapper.*;
 import com.example.demo.utils.DataUtils;
 import com.github.pagehelper.PageHelper;
@@ -41,7 +43,7 @@ public class ArticleService {
             articleInDto.setLikeCount(0);
             articleInDto.setViewCount(0);
             articleInDto.setCollectCount(0);
-            articleInDto.setIsFinished("1");
+            articleInDto.setIsFinished(ArticleStatusEnum.FINISHED.getType());
             User user = (User) request.getSession().getAttribute("user");
             articleInDto.setUid(user.getUid());
             //更新数据库
@@ -97,7 +99,7 @@ public class ArticleService {
         //草稿内容插入到数据库
         article.setAid(UUID.randomUUID().toString());
         article.setGmtCreate(new Date());
-        article.setIsFinished("0");
+        article.setIsFinished(ArticleStatusEnum.UNFINISHED.getType());
         User user = (User) request.getSession().getAttribute("user");
         article.setUid(user.getUid());
         articleMapper.insert(article);
@@ -169,14 +171,13 @@ public class ArticleService {
         //更改article数据库中的数据
         Article article = new Article();
         article.setAid(userArticle.getAid());
-        if (userArticle.getType()==1){
+        if (userArticle.getType()== UserArticleTypeEnum.LIKE.getType()){
             article.setLikeCount(1);
             articleExtMapper.incLikeCount(article);
-        }else if(userArticle.getType()==2){
+        }else if(userArticle.getType()==UserArticleTypeEnum.COLLECTION.getType()){
             article.setCollectCount(1);
             articleExtMapper.incCollectCount(article);
         }
-
     }
     //取消点赞或者收藏功能
     public void userAndArticleDel(UserArticle userArticle, HttpServletRequest request) {
@@ -192,10 +193,10 @@ public class ArticleService {
         //更改article数据库中的数据
         Article article = new Article();
         article.setAid(userArticle.getAid());
-        if (userArticle.getType()==1){
+        if (userArticle.getType()==UserArticleTypeEnum.LIKE.getType()){
             article.setLikeCount(1);
             articleExtMapper.decLikeCount(article);
-        }else if(userArticle.getType()==2){
+        }else if(userArticle.getType()==UserArticleTypeEnum.COLLECTION.getType()){
             article.setCollectCount(1);
             articleExtMapper.decCollectCount(article);
         }

@@ -5,6 +5,7 @@ import com.example.demo.entity.Article;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.CommentExample;
 import com.example.demo.entity.User;
+import com.example.demo.enums.CommentTypeEnum;
 import com.example.demo.mapper.ArticleExtMapper;
 import com.example.demo.mapper.ArticleMapper;
 import com.example.demo.mapper.CommentMapper;
@@ -29,7 +30,7 @@ public class CommentService {
     ArticleExtMapper  articleExtMapper;
 
     public void comment(Comment comment, HttpServletRequest request) {
-        if (comment.getType() == 1){
+        if (comment.getType() == CommentTypeEnum.ARTICLE.getType()){
             //评论
             comment.setCid(UUID.randomUUID().toString());
             comment.setPid(comment.getPid());
@@ -45,7 +46,6 @@ public class CommentService {
             article.setAid(comment.getPid());
             article.setCommentCount(1);
             articleExtMapper.incCommentCount(article);
-
         }
     }
 
