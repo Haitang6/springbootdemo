@@ -94,3 +94,10 @@
 .list-group-item.active>.badge, .nav-pills>.active>a>.badge{
     color: white !important;
 }
+#checkbox input{
+    margin-top: 10px;
+}
+#checkbox span{
+    margin-left: 6px;
+    margin-right: 10px;
+}

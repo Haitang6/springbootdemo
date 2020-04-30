@@ -11,4 +11,6 @@ public interface ArticleExtMapper {
     void decLikeCount(Article article);
 
     void decCollectCount(Article article);
+
+    void incCommentCount(Article article);
 }

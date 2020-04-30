@@ -1,25 +1,25 @@
 package com.example.demo.dto;
 
 import org.springframework.stereotype.Repository;
-
 import java.util.Arrays;
 import java.util.Date;
 
 @Repository
-public class ArticleDto {
+public class ArticleInDto {
 
     private String aid;
     private String Uid;
     private String title;
     private String context;
-    private String[] tags;
+    private String tags;
+    private String[] types;
     private String isPublic;
-    private String gmtCreate;
+    private String isFinished;
+    private Date gmtCreate;
     private Integer commentCount;
     private Integer likeCount;
     private Integer viewCount;
     private Integer collectCount;
-    private String isFinished;
 
     public String getIsFinished() {
         return isFinished;
@@ -77,15 +77,6 @@ public class ArticleDto {
         this.context = context == null ? null : context.trim();
     }
 
-
-    public String[] getTags() {
-        return tags;
-    }
-
-    public void setTags(String[] tags) {
-        this.tags = tags;
-    }
-
     public String getIsPublic() {
         return isPublic;
     }
@@ -94,12 +85,11 @@ public class ArticleDto {
         this.isPublic = isPublic == null ? null : isPublic.trim();
     }
 
-
-    public String getGmtCreate() {
+    public Date getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(String gmtCreate) {
+    public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
@@ -119,21 +109,39 @@ public class ArticleDto {
         this.likeCount = likeCount;
     }
 
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String[] getTypes() {
+        return types;
+    }
+
+    public void setTypes(String[] types) {
+        this.types = types;
+    }
+
+
     @Override
     public String toString() {
-        return "ArticleDto{" +
+        return "ArticleInDto{" +
                 "aid='" + aid + '\'' +
                 ", Uid='" + Uid + '\'' +
                 ", title='" + title + '\'' +
                 ", context='" + context + '\'' +
-                ", tags=" + Arrays.toString(tags) +
+                ", tags='" + tags + '\'' +
+                ", types=" + Arrays.toString(types) +
                 ", isPublic='" + isPublic + '\'' +
+                ", isFinished='" + isFinished + '\'' +
                 ", gmtCreate='" + gmtCreate + '\'' +
                 ", commentCount=" + commentCount +
                 ", likeCount=" + likeCount +
                 ", viewCount=" + viewCount +
                 ", collectCount=" + collectCount +
-                ", isFinished='" + isFinished + '\'' +
                 '}';
     }
 }

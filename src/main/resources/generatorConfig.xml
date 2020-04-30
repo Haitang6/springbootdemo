@@ -36,8 +36,9 @@
         <table tableName="user" domainObjectName="User"/>
         <table tableName="article" domainObjectName="Article"/>
         <table tableName="comment" domainObjectName="Comment"/>
-        <table tableName="test" domainObjectName="Test"/>
         <table tableName="user_article" domainObjectName="UserArticle"/>
         <table tableName="up_fan" domainObjectName="UpFan"/>
+        <table tableName="type" domainObjectName="Type"/>
+        <table tableName="article_type" domainObjectName="ArticleType"/>
     </context>
 </generatorConfiguration>

@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.CommentDto;
+import com.example.demo.entity.Article;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.CommentExample;
 import com.example.demo.entity.User;
+import com.example.demo.mapper.ArticleExtMapper;
+import com.example.demo.mapper.ArticleMapper;
 import com.example.demo.mapper.CommentMapper;
 import com.example.demo.utils.DataUtils;
 import com.mysql.cj.Session;
@@ -22,6 +25,8 @@ public class CommentService {
 
     @Autowired
     CommentMapper commentMapper;
+    @Autowired
+    ArticleExtMapper  articleExtMapper;
 
     public void comment(Comment comment, HttpServletRequest request) {
         if (comment.getType() == 1){
@@ -35,6 +40,12 @@ public class CommentService {
             User user = (User)request.getSession().getAttribute("user");
             comment.setUid(user.getUid());
             commentMapper.insert(comment);
+            //评论的文章commentCount+1
+            Article article = new Article();
+            article.setAid(comment.getPid());
+            article.setCommentCount(1);
+            articleExtMapper.incCommentCount(article);
+
         }
     }
 

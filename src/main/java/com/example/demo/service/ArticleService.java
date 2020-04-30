@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ArticleDto;
+import com.example.demo.dto.ArticleInDto;
 import com.example.demo.entity.*;
 import com.example.demo.mapper.*;
 import com.example.demo.utils.DataUtils;
@@ -29,22 +30,27 @@ public class ArticleService {
     UserArticleMapper userArticleMapper;
     @Autowired
     UserExtMapper userExtMapper;
+    @Autowired
+    ArticleTypeMapper articleTypeMapper;
 
-    public void insert(Article article,HttpServletRequest request) {
-        if (StringUtils.isNotBlank(article.getAid())){
+    public void insert(ArticleInDto articleInDto, HttpServletRequest request) {
+        if (StringUtils.isNotBlank(articleInDto.getAid())){
             //重写草稿箱中文文章
-            article.setGmtCreate(new Date());
-            article.setCommentCount(0);
-            article.setLikeCount(0);
-            article.setViewCount(0);
-            article.setCollectCount(0);
-            article.setIsFinished("1");
+            articleInDto.setGmtCreate(new Date());
+            articleInDto.setCommentCount(0);
+            articleInDto.setLikeCount(0);
+            articleInDto.setViewCount(0);
+            articleInDto.setCollectCount(0);
+            articleInDto.setIsFinished("1");
             User user = (User) request.getSession().getAttribute("user");
-            article.setUid(user.getUid());
+            articleInDto.setUid(user.getUid());
             //更新数据库
             ArticleExample articleExample = new ArticleExample();
             articleExample.createCriteria()
-                    .andAidEqualTo(article.getAid());
+                    .andAidEqualTo(articleInDto.getAid());
+            //articleInDto相同类型转换成article
+            Article article = new Article();
+            BeanUtils.copyProperties(articleInDto,article);
             articleMapper.updateByExample(article,articleExample);
             //用户未完成文章数量-1
             User user1 = new User();
@@ -57,24 +63,33 @@ public class ArticleService {
 
         }else {
             //发布新的文章
-            article.setAid(UUID.randomUUID().toString());
-            article.setGmtCreate(new Date());
-            article.setCommentCount(0);
-            article.setLikeCount(0);
-            article.setViewCount(0);
-            article.setCollectCount(0);
-            article.setIsFinished("1");
+            articleInDto.setAid(UUID.randomUUID().toString());
+            articleInDto.setGmtCreate(new Date());
+            articleInDto.setCommentCount(0);
+            articleInDto.setLikeCount(0);
+            articleInDto.setViewCount(0);
+            articleInDto.setCollectCount(0);
+            articleInDto.setIsFinished("1");
             User user = (User) request.getSession().getAttribute("user");
-            article.setUid(user.getUid());
+            articleInDto.setUid(user.getUid());
             //插入数据
+            Article article = new Article();
+            BeanUtils.copyProperties(articleInDto,article);
             articleMapper.insert(article);
             //用户发布文章数+1
             User user1 = new User();
             user1.setUid(user.getUid());
             user1.setFinishedArticleCount(1);
             userExtMapper.incFinishArticleCount(user1);
+            //文章type对应插入到数据库
+            String[] types = articleInDto.getTypes();
+            for (String typeid:types){
+                ArticleType articleType = new ArticleType();
+                articleType.setAid(articleInDto.getAid());
+                articleType.setTid(typeid);
+                articleTypeMapper.insert(articleType);
+            }
         }
-
     }
 
     //保存草稿
@@ -86,7 +101,7 @@ public class ArticleService {
         User user = (User) request.getSession().getAttribute("user");
         article.setUid(user.getUid());
         articleMapper.insert(article);
-        //增加用的为未完成文章数量
+        //增加用户未完成文章数量
         User user1 = new User();
         user1.setUid(user.getUid());
         user1.setUnfinishedArticleCount(1);

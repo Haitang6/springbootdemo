@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ArticleDto;
+import com.example.demo.dto.ArticleInDto;
 import com.example.demo.dto.CommentDto;
 import com.example.demo.dto.ResultDto;
 import com.example.demo.entity.Article;
@@ -32,8 +33,8 @@ public class ArticleController {
 
     //发布文章或者重写草稿箱文章
     @PostMapping("/publishArticle")
-    public String publishArticle(Article article, HttpServletRequest request) {
-        articleService.insert(article,request);
+    public String publishArticle(ArticleInDto articleInDto, HttpServletRequest request) {
+        articleService.insert(articleInDto,request);
         return "redirect:/";
     }
     //草稿内容存入到数据库
