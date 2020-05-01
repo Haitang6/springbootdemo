@@ -9,6 +9,15 @@ public class CommentDto {
     private Integer likeCount;
     private Integer replayCount;
     private Integer type;
+    private String commenterName;
+
+    public String getCommenterName() {
+        return commenterName;
+    }
+
+    public void setCommenterName(String commenterName) {
+        this.commenterName = commenterName;
+    }
 
     public String getCid() {
         return cid;

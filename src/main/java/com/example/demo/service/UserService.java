@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.*;
+import com.example.demo.enums.NotificationStatusEnum;
+import com.example.demo.enums.NotificationTypeEnum;
 import com.example.demo.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,8 @@ public class UserService {
     ArticleMapper articleMapper;
     @Autowired
     UserExtMapper userExtMapper;
+    @Autowired
+    NotificationMapper notificationMapper;
 
     public User findUserByUid(String uid) {
         UserExample userExample = new UserExample();
@@ -153,6 +157,18 @@ public class UserService {
         fan.setUid(user.getUid());
         fan.setUpCount(1);
         userExtMapper.incUpCount(fan);
+        //发送关注通知
+        Notification notification = new Notification();
+        notification.setNid(UUID.randomUUID().toString());
+        notification.setNotifier(user.getUid());
+        notification.setReceiver(upFan.getUpid());
+        notification.setNotifierName(user.getPetName());
+        notification.setNotifiedType(NotificationTypeEnum.ATTENTION.getType());
+        notification.setGmtCreate(new Date());
+        notification.setNotifiedStatus(NotificationStatusEnum.UNREAD.getType());
+        //通知存放到数据库
+        notificationMapper.insert(notification);
+
     }
 
     public void upAndFanDel(UpFan upFan, HttpServletRequest request) {

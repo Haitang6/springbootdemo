@@ -7,7 +7,6 @@ import com.example.demo.dto.ResultDto;
 import com.example.demo.entity.Article;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserArticle;
-import com.example.demo.repository.TestRepository;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.CommentService;
 import com.example.demo.service.UserService;
@@ -55,7 +54,9 @@ public class ArticleController {
     public String details(@PathVariable String aid, Model model,HttpServletRequest request) {
         //增加浏览数
         articleService.incView(aid);
+        //文章基本信息
         ArticleDto articleDto=articleService.findByAid(aid);
+        //文章下面的评论信息
         List<CommentDto> commentDtos=commentService.findCommentByAid(aid);
         //文章发布者信息
         User user=userService.findUserByUid(articleDto.getUid());
@@ -76,12 +77,14 @@ public class ArticleController {
         model.addAttribute("isAuthor",isAuthor);
         return "details";
     }
+    //点赞或者收藏
     @ResponseBody
     @PostMapping("/userAndArticleInc")
     public Object userAndArticleInc(@RequestBody UserArticle userArticle,HttpServletRequest request){
         articleService.userAndArticleInc(userArticle,request);
         return ResultDto.success();
     }
+    //取消点赞收藏
     @ResponseBody
     @PostMapping("/userAndArticleDel")
     public Object userAndArticleDel(@RequestBody UserArticle userArticle,HttpServletRequest request){

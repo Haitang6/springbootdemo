@@ -1,14 +1,14 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.CommentDto;
-import com.example.demo.entity.Article;
-import com.example.demo.entity.Comment;
-import com.example.demo.entity.CommentExample;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
 import com.example.demo.enums.CommentTypeEnum;
+import com.example.demo.enums.NotificationStatusEnum;
+import com.example.demo.enums.NotificationTypeEnum;
 import com.example.demo.mapper.ArticleExtMapper;
 import com.example.demo.mapper.ArticleMapper;
 import com.example.demo.mapper.CommentMapper;
+import com.example.demo.mapper.NotificationMapper;
 import com.example.demo.utils.DataUtils;
 import com.mysql.cj.Session;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +28,10 @@ public class CommentService {
     CommentMapper commentMapper;
     @Autowired
     ArticleExtMapper  articleExtMapper;
+    @Autowired
+    ArticleMapper articleMapper;
+    @Autowired
+    NotificationMapper notificationMapper;
 
     public void comment(Comment comment, HttpServletRequest request) {
         if (comment.getType() == CommentTypeEnum.ARTICLE.getType()){
@@ -40,12 +44,34 @@ public class CommentService {
             //获取当前登录用户
             User user = (User)request.getSession().getAttribute("user");
             comment.setUid(user.getUid());
+            comment.setCommenterName(user.getPetName());
             commentMapper.insert(comment);
             //评论的文章commentCount+1
             Article article = new Article();
             article.setAid(comment.getPid());
             article.setCommentCount(1);
             articleExtMapper.incCommentCount(article);
+            //通知
+            Notification notification = new Notification();
+            notification.setNid(UUID.randomUUID().toString());
+            notification.setNotifier(comment.getUid());
+            notification.setReceiver(user.getUid());
+            notification.setAid(comment.getPid());
+            notification.setGmtCreate(new Date());
+            notification.setNotifierName(user.getPetName());
+            notification.setNotifiedStatus(NotificationStatusEnum.UNREAD.getType());
+            notification.setNotifiedType(NotificationTypeEnum.COMMENT.getType());
+            //获取评论文章的名称
+            ArticleExample articleExample = new ArticleExample();
+            articleExample.createCriteria()
+                    .andAidEqualTo(comment.getPid());
+            List<Article> articles = articleMapper.selectByExample(articleExample);
+            notification.setArticleName(articles.get(0).getTitle());
+            //通知插入数据库
+            notificationMapper.insert(notification);
+
+
+
         }
     }
 

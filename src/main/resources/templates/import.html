@@ -21,6 +21,13 @@
     <link rel="stylesheet" href="/css/mycss.css">
     <script src="/modes/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 
+    <script src="/modes/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/frontend/layout/scripts/layout.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            Layout.init();
+        });
+    </script>
 </head>
 <body>
 <div th:fragment="head">
@@ -46,7 +53,7 @@
                         <li><a href="/publishHtml">发布</a></li>
                         <li><a href="#">清单</a></li>
                         <li><a href="#">驴友</a></li>
-                        <li th:if="${session.user!=null}"><a href="/myself" th:text="${session.user.petName}"></a></li>
+                        <li th:if="${session.user!=null}"><a th:href="@{'/myself/'+${session.user.uid}}" th:text="${session.user.petName}"></a></li>
                         <li th:if="${session.user==null}"><a href="/loginHtml" th:text="登录"></a></li>
                     </ul>
                 </div>
@@ -65,7 +72,7 @@
             <!-- 通知 -->
             <div class="top-cart-block">
                 <div class="top-cart-info" style="padding-right: 13px">
-                    <a href="javascript:void(0);" class="top-cart-info-count">3 个</a>
+                    <a class="top-cart-info-count" th:text="${session.notificationCount}+'个'"></a>
                     <a href="javascript:void(0);" class="top-cart-info-value">通知</a>
                     <i class="fa fa-bell" style="color:rgb(232,77,28)"></i>
                 </div>
@@ -73,13 +80,10 @@
                 <div class="top-cart-content-wrapper">
                     <div class="top-cart-content">
                         <ul class="scroller" style="height: 250px;">
-                            <li>
-                                <a href="shop-item.html"><img src="/modes/assets/frontend/pages/img/cart-img.jpg"
-                                                              alt="Rolex Classic Watch" width="37" height="34"></a>
-                                <span class="cart-content-count">x海棠</span>
-                                <strong><a href="shop-item.html">回复了你的问题</a></strong>
-                                <em>五一旅游</em>
-                                <a href="javascript:void(0);" class="del-goods">&nbsp;</a>
+                            <li th:each="notificationDto:${session.notificationDtos}">
+                                <span class="cart-content-count" style=" "><a th:href="@{'/myself/'+${notificationDto.notifier}}" th:text="${notificationDto.notifierName}" ></a></span>
+                                <span href="shop-item.html" style="display: inline-block;width: 100px" th:text="${notificationDto.type}"></span>
+                                <span href="shop-item.html" style="display: inline-block;width: 170px"><a th:href="@{'/read/'+${notificationDto.nid}}" th:text="${notificationDto.articleName}"></a></span>
                             </li>
                         </ul>
                         <div class="text-right">

@@ -2,10 +2,8 @@ package com.example.demo.interceptor;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +22,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         //通过cookie获取登录态
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
-
         } else {
             for (Cookie cookie : cookies) {
                 String name = cookie.getName();

@@ -4,6 +4,8 @@ import com.example.demo.dto.ArticleDto;
 import com.example.demo.dto.ArticleInDto;
 import com.example.demo.entity.*;
 import com.example.demo.enums.ArticleStatusEnum;
+import com.example.demo.enums.NotificationStatusEnum;
+import com.example.demo.enums.NotificationTypeEnum;
 import com.example.demo.enums.UserArticleTypeEnum;
 import com.example.demo.mapper.*;
 import com.example.demo.utils.DataUtils;
@@ -34,6 +36,8 @@ public class ArticleService {
     UserExtMapper userExtMapper;
     @Autowired
     ArticleTypeMapper articleTypeMapper;
+    @Autowired
+    NotificationMapper notificationMapper;
 
     public void insert(ArticleInDto articleInDto, HttpServletRequest request) {
         if (StringUtils.isNotBlank(articleInDto.getAid())){
@@ -172,9 +176,47 @@ public class ArticleService {
         Article article = new Article();
         article.setAid(userArticle.getAid());
         if (userArticle.getType()== UserArticleTypeEnum.LIKE.getType()){
+            //通知功能（喜欢文章）
+            Notification notification = new Notification();
+            notification.setNid(UUID.randomUUID().toString());
+            notification.setNotifier(user.getUid());
+            notification.setGmtCreate(new Date());
+            notification.setNotifiedStatus(NotificationStatusEnum.UNREAD.getType());
+            notification.setNotifierName(user.getPetName());
+            notification.setAid(userArticle.getAid());
+            notification.setNotifiedType(NotificationTypeEnum.LIKE.getType());
+            //获取这篇文章的作者
+            ArticleExample articleExample = new ArticleExample();
+            articleExample.createCriteria()
+                    .andAidEqualTo(userArticle.getAid());
+            List<Article> articles = articleMapper.selectByExample(articleExample);
+            notification.setReceiver(articles.get(0).getUid());
+            notification.setArticleName(articles.get(0).getTitle());
+            //通知插入到数据库
+            notificationMapper.insert(notification);
+            //文章的喜欢个数+1
             article.setLikeCount(1);
             articleExtMapper.incLikeCount(article);
         }else if(userArticle.getType()==UserArticleTypeEnum.COLLECTION.getType()){
+            //通知功能（收藏文章）
+            Notification notification = new Notification();
+            notification.setNid(UUID.randomUUID().toString());
+            notification.setNotifier(user.getUid());
+            notification.setGmtCreate(new Date());
+            notification.setNotifiedStatus(NotificationStatusEnum.UNREAD.getType());
+            notification.setNotifierName(user.getPetName());
+            notification.setAid(userArticle.getAid());
+            notification.setNotifiedType(NotificationTypeEnum.COLLECTION.getType());
+            //获取这篇文章的作者
+            ArticleExample articleExample = new ArticleExample();
+            articleExample.createCriteria()
+                    .andAidEqualTo(userArticle.getAid());
+            List<Article> articles = articleMapper.selectByExample(articleExample);
+            notification.setReceiver(articles.get(0).getUid());
+            notification.setArticleName(articles.get(0).getTitle());
+            //通知插入到数据库
+            notificationMapper.insert(notification);
+            //文章的收藏个数+1
             article.setCollectCount(1);
             articleExtMapper.incCollectCount(article);
         }

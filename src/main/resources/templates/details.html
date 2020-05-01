@@ -121,7 +121,7 @@
                     </a>
                     <div class="media-body" >
                         <h5 class="media-heading" >
-                            <span th:text="海棠" style="margin-right: 15px"></span>
+                            <span th:text="${comment.commenterName}" style="margin-right: 15px"></span>
                             <span th:text="'回复('+${comment.replayCount}+')'"></span>
                             <span th:text="${comment.gmtCreate}" style="float: right;font-family: 宋体 ; font-size: 10px;color: #9b99a0"></span>
                         </h5>

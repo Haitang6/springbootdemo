@@ -40,5 +40,6 @@
         <table tableName="up_fan" domainObjectName="UpFan"/>
         <table tableName="type" domainObjectName="Type"/>
         <table tableName="article_type" domainObjectName="ArticleType"/>
+        <table tableName="notification" domainObjectName="Notification"/>
     </context>
 </generatorConfiguration>

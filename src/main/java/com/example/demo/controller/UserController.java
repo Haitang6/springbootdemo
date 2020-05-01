@@ -10,15 +10,11 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,10 +70,10 @@ public class UserController {
         return ResultDto.success();
     }
     //个人中心
-    @GetMapping("/myself")
-    public String Myself(HttpServletRequest request, Model model) {
-        //获取当前登陆者
-        User user=(User)request.getSession().getAttribute("user");
+    @GetMapping("/myself/{uid}")
+    public String Myself(@PathVariable String uid, HttpServletRequest request, Model model) {
+        //根据uid获取用户
+        User user = userService.findUserByUid(uid);
         //查找已经完成的文章
         List<Article> articlesFinished=userService.findArticle(user,"1");
         //查找草稿文章
