@@ -3,19 +3,24 @@
 <head>
     <head th:replace="import::style"></head>
     <title>详情</title>
+    <link rel="stylesheet" href="/css/mycss.css">
     <link rel="stylesheet" href="/editormd/css/editormd.preview.css">
+    <script src="/js/comment.js"></script>
+    <script src="/js/my.js"></script>
     <script src="/editormd/lib/marked.min.js"></script>
     <script src="/editormd/lib/prettify.min.js"></script>
     <script src="/editormd/editormd.js"></script>
 
     <script type="text/javascript" th:inline="javascript">
         $(function () {
-                editormd.markdownToHTML("article-view", {});
+            editormd.markdownToHTML("article-view", {});
+            var articles = [[${articles}]];
+            for (var i = 0; i < articles.length; i++) {
+                var aid = articles[i].aid + "-relation";
+                editormd.markdownToHTML(aid, {});
+            }
         });
     </script>
-    <script src="/js/comment.js"></script>
-    <link rel="stylesheet" href="/css/mycss.css">
-    <script src="/js/my.js"></script>
 </head>
 <body class="ecommerce">
 <div th:replace="import::head"></div>
@@ -185,20 +190,16 @@
                 <!--相关文章-->
                 <div  >
                     <h3 style="margin-top: 110px;margin-bottom: 20px">相关文章</h3>
-                    <a style="color: #3e3e3e;text-decoration:none">
+                    <a style="color: #3e3e3e;text-decoration:none" th:each="article:${articles}" th:href="@{'/details/'+${article.aid}}">
                         <h4>
-                            <b><span>清明上河园</span></b>
-                            <span style="float: right;font-size: 10px">浏览数：456</span>
+                            <b><span th:text="${article.title}">清明上河园</span></b>
+                            <span style="float: right;font-size: 10px" th:text="'浏览数：' + ${article.viewCount}"></span>
                         </h4>
-                        <p>我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</p>
-                        <hr>
-                    </a>
-                    <a style="color: #3e3e3e;text-decoration:none">
-                        <h4>
-                            <b><span>清明上河园</span></b>
-                            <span style="float: right;font-size: 10px">浏览数：456</span>
-                        </h4>
-                        <p>我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</p>
+                        <div style="height: 30px ;overflow:hidden;text-overflow:ellipsis;">
+                            <div th:id="${article.aid} + '-relation'" style="padding: 0px;padding-top: 10px">
+                                <textarea style="width: 100%; height: 30px" th:text="${article.context}"></textarea>
+                            </div>
+                        </div>
                         <hr>
                     </a>
                 </div>

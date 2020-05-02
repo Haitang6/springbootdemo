@@ -68,6 +68,8 @@ public class ArticleController {
         String isAttention=userService.idAttention(aid,request);
         //判断当前文章的作者是否为当前的浏览者
         String isAuthor=userService.isAuthor(aid,request);
+        //相关推荐
+        List<Article> articles=articleService.recomment(aid);
         model.addAttribute("article",articleDto);
         model.addAttribute("comments",commentDtos);
         model.addAttribute("creator",user);
@@ -75,6 +77,7 @@ public class ArticleController {
         model.addAttribute("isCollect",isCollect);
         model.addAttribute("isAttention",isAttention);
         model.addAttribute("isAuthor",isAuthor);
+        model.addAttribute("articles",articles);
         return "details";
     }
     //点赞或者收藏

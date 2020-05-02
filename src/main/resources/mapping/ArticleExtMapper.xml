@@ -61,4 +61,8 @@
     COMMENT_COUNT = COMMENT_COUNT + #{commentCount,jdbcType=INTEGER}
     where aid = #{aid}
   </update>
+  <!--正则匹配相关文章-->
+  <select id="selectByRegexp" parameterType="com.example.demo.entity.Article" resultMap="BaseResultMap">
+        select * from ARTICLE  where  AID !=#{aid} and TAGS regexp #{tags} order by VIEW_COUNT DESC limit 10
+    </select>
 </mapper>

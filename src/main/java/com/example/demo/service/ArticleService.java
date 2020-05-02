@@ -14,13 +14,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
@@ -39,8 +36,9 @@ public class ArticleService {
     @Autowired
     NotificationMapper notificationMapper;
 
+    //发布文章
     public void insert(ArticleInDto articleInDto, HttpServletRequest request) {
-        if (StringUtils.isNotBlank(articleInDto.getAid())){
+        if (StringUtils.isNotBlank(articleInDto.getAid())) {
             //重写草稿箱中文文章
             articleInDto.setGmtCreate(new Date());
             articleInDto.setCommentCount(0);
@@ -56,8 +54,8 @@ public class ArticleService {
                     .andAidEqualTo(articleInDto.getAid());
             //articleInDto相同类型转换成article
             Article article = new Article();
-            BeanUtils.copyProperties(articleInDto,article);
-            articleMapper.updateByExample(article,articleExample);
+            BeanUtils.copyProperties(articleInDto, article);
+            articleMapper.updateByExample(article, articleExample);
             //用户未完成文章数量-1
             User user1 = new User();
             user1.setUid(user.getUid());
@@ -67,7 +65,7 @@ public class ArticleService {
             user1.setFinishedArticleCount(1);
             userExtMapper.incFinishArticleCount(user1);
 
-        }else {
+        } else {
             //发布新的文章
             articleInDto.setAid(UUID.randomUUID().toString());
             articleInDto.setGmtCreate(new Date());
@@ -80,7 +78,7 @@ public class ArticleService {
             articleInDto.setUid(user.getUid());
             //插入数据
             Article article = new Article();
-            BeanUtils.copyProperties(articleInDto,article);
+            BeanUtils.copyProperties(articleInDto, article);
             articleMapper.insert(article);
             //用户发布文章数+1
             User user1 = new User();
@@ -89,7 +87,7 @@ public class ArticleService {
             userExtMapper.incFinishArticleCount(user1);
             //文章type对应插入到数据库
             String[] types = articleInDto.getTypes();
-            for (String typeid:types){
+            for (String typeid : types) {
                 ArticleType articleType = new ArticleType();
                 articleType.setAid(articleInDto.getAid());
                 articleType.setTid(typeid);
@@ -115,18 +113,21 @@ public class ArticleService {
 
     }
 
+    //查询所有
     public List<ArticleDto> findAll(int pageNum) {
-        PageHelper.startPage(pageNum,2);
+        PageHelper.startPage(pageNum, 10);
         ArticleExample articleExample = new ArticleExample();
+        articleExample.createCriteria()
+                .andIsFinishedEqualTo(ArticleStatusEnum.FINISHED.getType());
         List<Article> articles = articleMapper.selectByExample(articleExample);
         ArrayList<ArticleDto> articleDtos = new ArrayList<>();
-        for(Article article:articles){
+        for (Article article : articles) {
             //日期格式转换
             String dateStr = DataUtils.dateToString(article.getGmtCreate(), "yyyy-MM-dd");
             //分割tags标签
-            String[] tags= StringUtils.split(article.getTags(),",");
+            String[] tags = StringUtils.split(article.getTags(), ",");
             ArticleDto articleDto = new ArticleDto();
-            BeanUtils.copyProperties(article,articleDto);
+            BeanUtils.copyProperties(article, articleDto);
             articleDto.setTags(tags);
             articleDto.setGmtCreate(dateStr);
             articleDtos.add(articleDto);
@@ -146,19 +147,20 @@ public class ArticleService {
         commentExample.createCriteria()
                 .andPidEqualTo(aid);
         List<Comment> comments = commentMapper.selectByExample(commentExample);
-        if (articles == null){
+        if (articles == null) {
             return null;
-        }else {
+        } else {
             ArticleDto articleDto = new ArticleDto();
             String dateStr = DataUtils.dateToString(articles.get(0).getGmtCreate(), "yyyy-MM-dd HH:mm:ss");
-            String[] tags= StringUtils.split(articles.get(0).getTags(),",");
-            BeanUtils.copyProperties(articles.get(0),articleDto);
+            String[] tags = StringUtils.split(articles.get(0).getTags(), ",");
+            BeanUtils.copyProperties(articles.get(0), articleDto);
             articleDto.setTags(tags);
             articleDto.setGmtCreate(dateStr);
             articleDto.setCommentCount(comments.size());
             return articleDto;
         }
     }
+
     //增加浏览数
     public void incView(String aid) {
         Article article = new Article();
@@ -166,16 +168,17 @@ public class ArticleService {
         article.setViewCount(1);
         articleExtMapper.incView(article);
     }
+
     //点赞或者收藏功能
     public void userAndArticleInc(UserArticle userArticle, HttpServletRequest request) {
         //关联关系添加到表中
-        User user=(User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         userArticle.setUid(user.getUid());
         userArticleMapper.insert(userArticle);
         //更改article数据库中的数据
         Article article = new Article();
         article.setAid(userArticle.getAid());
-        if (userArticle.getType()== UserArticleTypeEnum.LIKE.getType()){
+        if (userArticle.getType() == UserArticleTypeEnum.LIKE.getType()) {
             //通知功能（喜欢文章）
             Notification notification = new Notification();
             notification.setNid(UUID.randomUUID().toString());
@@ -197,7 +200,7 @@ public class ArticleService {
             //文章的喜欢个数+1
             article.setLikeCount(1);
             articleExtMapper.incLikeCount(article);
-        }else if(userArticle.getType()==UserArticleTypeEnum.COLLECTION.getType()){
+        } else if (userArticle.getType() == UserArticleTypeEnum.COLLECTION.getType()) {
             //通知功能（收藏文章）
             Notification notification = new Notification();
             notification.setNid(UUID.randomUUID().toString());
@@ -221,10 +224,11 @@ public class ArticleService {
             articleExtMapper.incCollectCount(article);
         }
     }
+
     //取消点赞或者收藏功能
     public void userAndArticleDel(UserArticle userArticle, HttpServletRequest request) {
         //关联表中删除数据
-        User user=(User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         userArticle.setUid(user.getUid());
         UserArticleExample userArticleExample = new UserArticleExample();
         userArticleExample.createCriteria()
@@ -235,10 +239,10 @@ public class ArticleService {
         //更改article数据库中的数据
         Article article = new Article();
         article.setAid(userArticle.getAid());
-        if (userArticle.getType()==UserArticleTypeEnum.LIKE.getType()){
+        if (userArticle.getType() == UserArticleTypeEnum.LIKE.getType()) {
             article.setLikeCount(1);
             articleExtMapper.decLikeCount(article);
-        }else if(userArticle.getType()==UserArticleTypeEnum.COLLECTION.getType()){
+        } else if (userArticle.getType() == UserArticleTypeEnum.COLLECTION.getType()) {
             article.setCollectCount(1);
             articleExtMapper.decCollectCount(article);
         }
@@ -252,8 +256,24 @@ public class ArticleService {
                 .andAidEqualTo(aid);
         List<Article> articles = articleMapper.selectByExample(articleExample);
         return articles.get(0);
-
     }
 
+    //相关推荐
+    public List<Article> recomment(String aid) {
+        //根据adi查询文章数据库信息
+        ArticleExample articleExample = new ArticleExample();
+        articleExample.createCriteria()
+                .andAidEqualTo(aid);
+        List<Article> articles = articleMapper.selectByExample(articleExample);
+        //根据文章tag进行相关推荐
+        String[] tags = StringUtils.split(articles.get(0).getTags(), ",");
+        String regexp = Arrays.stream(tags).collect(Collectors.joining("|"));
+        Article article = new Article();
+        article.setTags(regexp);
+        article.setAid(articles.get(0).getAid());
+        List<Article> articles1=articleExtMapper.selectByRegexp(article);
 
+
+        return articles1;
+    }
 }

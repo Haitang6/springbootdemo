@@ -26,31 +26,34 @@ public class NotificationInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //获取当前登陆者
         User user = (User) request.getSession().getAttribute("user");
-
-        //通知功能
-        NotificationExample notificationExample = new NotificationExample();
-        notificationExample.createCriteria()
-                .andReceiverEqualTo(user.getUid())
-                .andNotifiedStatusEqualTo(NotificationStatusEnum.UNREAD.getType());
-        List<Notification> notifications = notificationMapper.selectByExample(notificationExample);
-        List<NotificationDto> notificationDtos=new ArrayList<>();
-        for (Notification notification:notifications){
-            NotificationDto notificationDto = new NotificationDto();
-            BeanUtils.copyProperties(notification,notificationDto);
-            if (notification.getNotifiedType()== NotificationTypeEnum.COMMENT.getType()){
-                notificationDto.setType(NotificationTypeEnum.COMMENT.getDescribe());
-            }else if (notification.getNotifiedType()==NotificationTypeEnum.ATTENTION.getType()){
-                notificationDto.setType(NotificationTypeEnum.ATTENTION.getDescribe());
-            }else if (notification.getNotifiedType()==NotificationTypeEnum.LIKE.getType()){
-                notificationDto.setType(NotificationTypeEnum.LIKE.getDescribe());
-            }else if (notification.getNotifiedType()==NotificationTypeEnum.COLLECTION.getType()){
-                notificationDto.setType(NotificationTypeEnum.COLLECTION.getDescribe());
+        if (user== null){
+            return true;
+        }else {
+            //通知功能
+            NotificationExample notificationExample = new NotificationExample();
+            notificationExample.createCriteria()
+                    .andReceiverEqualTo(user.getUid())
+                    .andNotifiedStatusEqualTo(NotificationStatusEnum.UNREAD.getType());
+            List<Notification> notifications = notificationMapper.selectByExample(notificationExample);
+            List<NotificationDto> notificationDtos=new ArrayList<>();
+            for (Notification notification:notifications){
+                NotificationDto notificationDto = new NotificationDto();
+                BeanUtils.copyProperties(notification,notificationDto);
+                if (notification.getNotifiedType()== NotificationTypeEnum.COMMENT.getType()){
+                    notificationDto.setType(NotificationTypeEnum.COMMENT.getDescribe());
+                }else if (notification.getNotifiedType()==NotificationTypeEnum.ATTENTION.getType()){
+                    notificationDto.setType(NotificationTypeEnum.ATTENTION.getDescribe());
+                }else if (notification.getNotifiedType()==NotificationTypeEnum.LIKE.getType()){
+                    notificationDto.setType(NotificationTypeEnum.LIKE.getDescribe());
+                }else if (notification.getNotifiedType()==NotificationTypeEnum.COLLECTION.getType()){
+                    notificationDto.setType(NotificationTypeEnum.COLLECTION.getDescribe());
+                }
+                notificationDtos.add(notificationDto);
             }
-            notificationDtos.add(notificationDto);
+            //通知个数
+            request.getSession().setAttribute("notificationCount",notificationDtos.size());
+            request.getSession().setAttribute("notificationDtos",notificationDtos);
+            return true;
         }
-        //通知个数
-        request.getSession().setAttribute("notificationCount",notificationDtos.size());
-        request.getSession().setAttribute("notificationDtos",notificationDtos);
-        return true;
     }
 }
