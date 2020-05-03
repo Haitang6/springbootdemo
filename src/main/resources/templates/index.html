@@ -64,7 +64,7 @@
                             <hr>
                         </div>
 
-                        <ul class="pagination pull-right">
+                        <ul class="pagination pull-right" th:if="${typeTitle=='热点消息'}">
                             <li>
                                 <a th:href="@{/(pageNum=${ArticlePageInfo.pageNum} - 1)}">
                                     <i class="fa fa-angle-left"></i>
@@ -90,6 +90,36 @@
                             </li>
                             <li>
                                 <a th:href="@{/(pageNum=${ArticlePageInfo.pageNum} + 1)}">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="pagination pull-right" th:if="${typeTitle != '热点消息'}">
+                            <li>
+                                <a th:href="@{'/'+${typeId}(pageNum=${ArticlePageInfo.pageNum} - 1)}">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{'/'+${typeId}(pageNum=1)}">1 </a>
+                            </li>
+                            <li>
+                                <a th:href="@{'/'+${typeId}(pageNum=2)}">2 </a>
+                            </li>
+                            <li>
+                                <a th:href="@{'/'+${typeId}(pageNum=3)}">3 </a>
+                            </li>
+                            <li>
+                                <a th:href="@{'/'+${typeId}(pageNum=4)}">4 </a>
+                            </li>
+                            <li>
+                                <a th:href="@{'/'+${typeId}(pageNum=5)}">5 </a>
+                            </li>
+                            <li>
+                                <a th:href="@{'/'+${typeId}(pageNum=6)}">6 </a>
+                            </li>
+                            <li>
+                                <a th:href="@{'/'+${typeId}(pageNum=${ArticlePageInfo.pageNum} + 1)}">
                                     <i class="fa fa-angle-right"></i>
                                 </a>
                             </li>

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 @Repository
-public class ArticleInDto {
+public class ArticleInDto  {
 
     private String aid;
     private String Uid;
@@ -20,6 +20,8 @@ public class ArticleInDto {
     private Integer likeCount;
     private Integer viewCount;
     private Integer collectCount;
+
+
 
     public String getIsFinished() {
         return isFinished;
@@ -144,4 +146,5 @@ public class ArticleInDto {
                 ", collectCount=" + collectCount +
                 '}';
     }
+
 }

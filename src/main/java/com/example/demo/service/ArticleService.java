@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -124,6 +125,8 @@ public class ArticleService {
         for (Article article : articles) {
             //日期格式转换
             String dateStr = DataUtils.dateToString(article.getGmtCreate(), "yyyy-MM-dd");
+            Timestamp timestamp = new Timestamp(article.getGmtCreate().getTime());
+            long timestampTime = timestamp.getTime();
             //分割tags标签
             String[] tags = StringUtils.split(article.getTags(), ",");
             ArticleDto articleDto = new ArticleDto();
@@ -131,6 +134,7 @@ public class ArticleService {
             articleDto.setTags(tags);
             articleDto.setGmtCreate(dateStr);
             articleDtos.add(articleDto);
+            articleDto.setTimestampTime(timestampTime);
         }
         return articleDtos;
     }
@@ -152,11 +156,14 @@ public class ArticleService {
         } else {
             ArticleDto articleDto = new ArticleDto();
             String dateStr = DataUtils.dateToString(articles.get(0).getGmtCreate(), "yyyy-MM-dd HH:mm:ss");
+            Timestamp timestamp = new Timestamp(articles.get(0).getGmtCreate().getTime());
+            long timestampTime = timestamp.getTime();
             String[] tags = StringUtils.split(articles.get(0).getTags(), ",");
             BeanUtils.copyProperties(articles.get(0), articleDto);
             articleDto.setTags(tags);
             articleDto.setGmtCreate(dateStr);
             articleDto.setCommentCount(comments.size());
+            articleDto.setTimestampTime(timestampTime);
             return articleDto;
         }
     }

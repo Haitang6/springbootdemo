@@ -32,6 +32,7 @@ window.onload = function () {
     $(".like").click(
         function () {
             if ($(".like").is(":checked")){
+                //点击喜欢
                 $("#no-fa-thumb").addClass("fa-thumbs-up");
                 var aid=$(".aid").val();
                 $.ajax({
@@ -50,6 +51,7 @@ window.onload = function () {
                     dataType:"json"
                 })
             }else {
+                //取消喜欢
                 $("#yes-fa-thumb").removeClass("fa-thumbs-up");
                 $("#yes-fa-thumb").addClass("fa-thumbs-o-up");
                 var aid=$(".aid").val();

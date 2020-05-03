@@ -1,17 +1,25 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.ArticleDto;
 import com.example.demo.entity.*;
+import com.example.demo.enums.ArticleStatusEnum;
 import com.example.demo.enums.NotificationStatusEnum;
 import com.example.demo.enums.NotificationTypeEnum;
+import com.example.demo.enums.UserArticleTypeEnum;
 import com.example.demo.mapper.*;
+import com.example.demo.utils.DataUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.text.SimpleDateFormat;
 
 @Service
 public class UserService {
@@ -100,9 +108,9 @@ public class UserService {
                 .andTypeEqualTo(1);
         List<UserArticle> userArticles = userArticleMapper.selectByExample(userArticleExample);
         if (userArticles.size() == 0){
-            return "false";
+            return UserArticleTypeEnum.UNLIKE.getDescription();
         }else {
-            return "true";
+            return UserArticleTypeEnum.LIKE.getDescription();
         }
     }
     //文章是否被当前读者收藏
@@ -115,9 +123,9 @@ public class UserService {
                 .andTypeEqualTo(2);
         List<UserArticle> userArticles = userArticleMapper.selectByExample(userArticleExample);
         if (userArticles.size() == 0){
-            return "false";
+            return UserArticleTypeEnum.UNCOLLECTION.getDescription();
         }else {
-            return "true";
+            return UserArticleTypeEnum.COLLECTION.getDescription();
         }
     }
     //文章的作者是否被当前读者关注
@@ -249,5 +257,38 @@ public class UserService {
             fans.add(users.get(0));
         }
         return fans;
+    }
+
+    //查找uploader的文章(包含文章是否被点赞关注)
+    public List<ArticleDto> findArticleDto(User uploader, HttpServletRequest request) {
+        List<ArticleDto> articleDtos=new ArrayList<>();
+        //uploader的文章
+        List<Article> articles = findArticle(uploader, ArticleStatusEnum.FINISHED.getType());
+        //遍历文章，看当前文章读者是否给他点赞 关注
+        for (Article article:articles){
+            ArticleDto articleDto = new ArticleDto();
+            BeanUtils.copyProperties(article,articleDto);
+            //时间转换
+            articleDto.setGmtCreate(DataUtils.dateToString(article.getGmtCreate(),"yyyy-MM-dd HH:mm:ss"));
+            Timestamp timestamp = new Timestamp(article.getGmtCreate().getTime());
+            long timestampTime = timestamp.getTime();
+            articleDto.setTimestampTime(timestampTime);
+            //是否点赞
+            String islike = isLike(article.getAid(), request);
+            if (UserArticleTypeEnum.LIKE.getDescription().equals(islike)){
+                articleDto.setIsLike(UserArticleTypeEnum.LIKE.getDescription());
+            }else if (UserArticleTypeEnum.UNLIKE.getDescription().equals(islike)){
+                articleDto.setIsLike(UserArticleTypeEnum.UNLIKE.getDescription());
+            }
+            //是否收藏
+            String isCollect = isCollect(article.getAid(), request);
+            if (UserArticleTypeEnum.COLLECTION.getDescription().equals(isCollect)){
+                articleDto.setIsCollection(UserArticleTypeEnum.COLLECTION.getDescription());
+            }else if (UserArticleTypeEnum.UNCOLLECTION.getDescription().equals(isCollect)){
+                articleDto.setIsCollection(UserArticleTypeEnum.UNCOLLECTION.getDescription());
+            }
+            articleDtos.add(articleDto);
+        }
+        return articleDtos;
     }
 }

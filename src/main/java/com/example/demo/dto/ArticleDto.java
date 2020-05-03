@@ -1,12 +1,12 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
-import java.util.Date;
+import javax.xml.crypto.Data;
 
 @Repository
-public class ArticleDto {
+public class ArticleDto implements Comparable<ArticleDto>  {
 
     private String aid;
     private String Uid;
@@ -15,11 +15,51 @@ public class ArticleDto {
     private String[] tags;
     private String isPublic;
     private String gmtCreate;
+    private long timestampTime;
     private Integer commentCount;
     private Integer likeCount;
     private Integer viewCount;
     private Integer collectCount;
     private String isFinished;
+    private String isLike;
+    private String isCollection;
+    private User user;
+
+    public ArticleDto() {
+
+    }
+
+    public long getTimestampTime() {
+        return timestampTime;
+    }
+
+    public void setTimestampTime(long timestampTime) {
+        this.timestampTime = timestampTime;
+    }
+
+    public String getIsLike() {
+        return isLike;
+    }
+
+    public void setIsLike(String isLike) {
+        this.isLike = isLike;
+    }
+
+    public String getIsCollection() {
+        return isCollection;
+    }
+
+    public void setIsCollection(String isCollection) {
+        this.isCollection = isCollection;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getIsFinished() {
         return isFinished;
@@ -119,21 +159,27 @@ public class ArticleDto {
         this.likeCount = likeCount;
     }
 
+
+    public ArticleDto(String aid, String uid, String title, String context, String[] tags, String isPublic, String gmtCreate, Integer commentCount, Integer likeCount, Integer viewCount, Integer collectCount, String isFinished, User user) {
+        this.aid = aid;
+        Uid = uid;
+        this.title = title;
+        this.context = context;
+        this.tags = tags;
+        this.isPublic = isPublic;
+        this.gmtCreate = gmtCreate;
+        this.commentCount = commentCount;
+        this.likeCount = likeCount;
+        this.viewCount = viewCount;
+        this.collectCount = collectCount;
+        this.isFinished = isFinished;
+        this.user = user;
+    }
+
     @Override
-    public String toString() {
-        return "ArticleDto{" +
-                "aid='" + aid + '\'' +
-                ", Uid='" + Uid + '\'' +
-                ", title='" + title + '\'' +
-                ", context='" + context + '\'' +
-                ", tags=" + Arrays.toString(tags) +
-                ", isPublic='" + isPublic + '\'' +
-                ", gmtCreate='" + gmtCreate + '\'' +
-                ", commentCount=" + commentCount +
-                ", likeCount=" + likeCount +
-                ", viewCount=" + viewCount +
-                ", collectCount=" + collectCount +
-                ", isFinished='" + isFinished + '\'' +
-                '}';
+    public int compareTo(ArticleDto o) {
+        Long  time=o.getTimestampTime()-this.getTimestampTime();
+        int i = new Long(time).intValue();
+        return i;
     }
 }

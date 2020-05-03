@@ -9,7 +9,6 @@ import com.example.demo.mapper.NotificationMapper;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.UserService;
 import com.github.pagehelper.PageInfo;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -38,6 +38,7 @@ public class IndexController {
                         @RequestParam(name = "pageNum", required = true, defaultValue = "1") int pageNum) {
         //查询最热消息
         List<ArticleDto> articleDtos = articleService.findAll(pageNum);
+        Collections.sort(articleDtos);
         PageInfo<ArticleDto> pageInfo = new PageInfo<>(articleDtos);
         pageInfo.setPageNum(pageNum);
         model.addAttribute("ArticlePageInfo", pageInfo);
@@ -59,23 +60,31 @@ public class IndexController {
             ArticleDto articleDto = articleService.findByAid(aid);
             articleDtos.add(articleDto);
         }
+        Collections.sort(articleDtos);
         PageInfo<ArticleDto> pageInfo = new PageInfo<>(articleDtos);
         pageInfo.setPageNum(pageNum);
         model.addAttribute("ArticlePageInfo", pageInfo);
-        if (tid.equals(ArticleTypeEnum.INTRODUCE.getCode())){
+        if (tid.equals(ArticleTypeEnum.INTRODUCE.getCode())) {
             model.addAttribute("typeTitle", ArticleTypeEnum.INTRODUCE.getMessage());
-        }else if (tid.equals(ArticleTypeEnum.FOOD.getCode())){
+            model.addAttribute("typeId", ArticleTypeEnum.INTRODUCE.getCode());
+        } else if (tid.equals(ArticleTypeEnum.FOOD.getCode())) {
             model.addAttribute("typeTitle", ArticleTypeEnum.FOOD.getMessage());
-        }else if (tid.equals(ArticleTypeEnum.ACCOMMODATION.getCode())){
+            model.addAttribute("typeId", ArticleTypeEnum.FOOD.getCode());
+        } else if (tid.equals(ArticleTypeEnum.ACCOMMODATION.getCode())) {
             model.addAttribute("typeTitle", ArticleTypeEnum.ACCOMMODATION.getMessage());
-        }else if (tid.equals(ArticleTypeEnum.PATH.getCode())){
+            model.addAttribute("typeId", ArticleTypeEnum.ACCOMMODATION.getCode());
+        } else if (tid.equals(ArticleTypeEnum.PATH.getCode())) {
             model.addAttribute("typeTitle", ArticleTypeEnum.PATH.getMessage());
-        }else if (tid.equals(ArticleTypeEnum.STRATEGY.getCode())){
+            model.addAttribute("typeId", ArticleTypeEnum.PATH.getCode());
+        } else if (tid.equals(ArticleTypeEnum.STRATEGY.getCode())) {
             model.addAttribute("typeTitle", ArticleTypeEnum.STRATEGY.getMessage());
-        }else if (tid.equals(ArticleTypeEnum.FRIEND.getCode())){
+            model.addAttribute("typeId", ArticleTypeEnum.STRATEGY.getCode());
+        } else if (tid.equals(ArticleTypeEnum.FRIEND.getCode())) {
             model.addAttribute("typeTitle", ArticleTypeEnum.FRIEND.getMessage());
-        }else if (tid.equals(ArticleTypeEnum.FARAWAY.getCode())){
+            model.addAttribute("typeId", ArticleTypeEnum.FRIEND.getCode());
+        } else if (tid.equals(ArticleTypeEnum.FARAWAY.getCode())) {
             model.addAttribute("typeTitle", ArticleTypeEnum.FARAWAY.getMessage());
+            model.addAttribute("typeId", ArticleTypeEnum.FARAWAY.getCode());
         }
         return "index";
     }

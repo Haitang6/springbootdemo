@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="import::style"></head>
+    <title>详情</title>
+    <link rel="stylesheet" href="/css/mycss.css">
+    <link rel="stylesheet" href="/editormd/css/editormd.preview.css">
+    <script src="/js/comment.js"></script>
+    <script src="/js/my.js"></script>
+    <script src="/editormd/lib/marked.min.js"></script>
+    <script src="/editormd/lib/prettify.min.js"></script>
+    <script src="/editormd/editormd.js"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+        $(function () {
+            var articleDtos = [[${articleDtos}]];
+            for (var i = 0; i < articleDtos.length; i++) {
+                var aid = articleDtos[i].aid + "-myUploader";
+                editormd.markdownToHTML(aid, {});
+            }
+        });
+    </script>
+    <script src="/modes/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="/modes/assets/frontend/layout/scripts/layout.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            Layout.init();
+        });
+    </script>
+</head>
+<body class="ecommerce">
+<div th:replace="import::head"></div>
+<div class="page-container" style="padding: 0px">
+    <div class="portlet light " style="padding: 30px 200px 15px 230px">
+        <div class="row" th:each="articleDto:${articleDtos}">
+            <div class="col-md-12 article-block">
+                <span style="margin-top:0;font-size: 30px" th:text="${articleDto.title}"></span>
+                <div class="blog-tag-data">
+                    <div class="row" style="margin-top: 10px;color: #E6400C">
+                        <div class="col-md-8">
+                            <ul class="list-inline blog-tags">
+                                <li>
+                                    <i class="fa fa-user"></i>
+                                    <span th:text="'发布者：'+${articleDto.user.petName}" style="color: #0C1021"></span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-calendar"></i>
+                                    <span th:text="'发布时间：'+${articleDto.gmtCreate}" style="color: #0C1021"></span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-book"></i>
+                                    <span th:text="'阅读数：'+${articleDto.viewCount}" style="color: #0C1021"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div  style="height: 65px ;overflow:hidden;text-overflow:ellipsis;">
+                    <div th:id="${articleDto.aid}+'-myUploader'">
+                        <textarea style="width: 100%"  th:text="${articleDto.context}"></textarea>
+                    </div>
+                </div>
+                <!--点赞 收藏-->
+                <div style=" margin-left: 30px;margin-top: 10px;font-size: 16px">
+                    <ul class="list-inline blog-tags">
+                        <a>
+                            <li >
+                                <label th:if="${articleDto.isLike=='不喜欢'}"><!--如果读者当时没有给这篇文章点赞-->
+                                    <input type="hidden" th:value="${articleDto.aid}" class="aid"/>
+                                    <input type="checkbox" class="like"  style="visibility: hidden" />
+                                    <i class="fa fa-thumbs-o-up" id="no-fa-thumb"></i>
+                                    <span style="color: #0C1021" th:text="'点赞'+${articleDto.likeCount}"></span>
+                                </label>
+                                <label th:if="${articleDto.isLike=='喜欢'}"><!--如果读者已经给这篇文章点过赞-->
+                                    <input type="hidden" th:value="${articleDto.aid}" class="aid"/>
+                                    <input type="checkbox" class="like"  style="visibility: hidden" checked="checked"/>
+                                    <i class="fa fa-thumbs-up" id="yes-fa-thumb"></i>
+                                    <span style="color: #0C1021" th:text="'点赞'+${articleDto.likeCount}"></span>
+                                </label>
+                            </li>
+                        </a>
+
+                        <a>
+                            <li>
+                                <label th:if="${articleDto.isCollection=='未收藏'}"><!--读者没有收藏当前文章-->
+                                    <input type="checkbox" class="collect"  style="visibility: hidden"  />
+                                    <i class="fa fa-star-o" id="no-fa-star"></i>
+                                    <span  style="color: #0C1021" th:text="'收藏'+${articleDto.collectCount}"></span>
+                                </label>
+                                <label th:if="${articleDto.isCollection=='已收藏'}"><!--读者已经收藏当前文章-->
+                                    <input type="checkbox" class="collect"  style="visibility: hidden" checked="checked" />
+                                    <i class="fa fa-star" id="yes-fa-star"></i>
+                                    <span  style="color: #0C1021" th:text="'收藏'+${articleDto.collectCount}"></span>
+                                </label>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
