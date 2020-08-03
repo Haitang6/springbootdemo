@@ -65,13 +65,13 @@
                             <li >
                                 <label th:if="${isLike=='不喜欢'}"><!--如果读者当时没有给这篇文章点赞-->
                                     <input type="hidden" th:value="${article.aid}" class="aid"/>
-                                    <input type="checkbox" class="like"  style="visibility: hidden"    />
+                                    <input type="checkbox" class="like"  style="visibility: hidden"  th:value="${article.aid}"   />
                                     <i class="fa fa-thumbs-o-up" id="no-fa-thumb"></i>
                                     <span style="color: #0C1021" th:text="'点赞'+${article.likeCount}"></span>
                                 </label>
                                 <label th:if="${isLike=='喜欢'}"><!--如果读者已经给这篇文章点过赞-->
                                     <input type="hidden" th:value="${article.aid}" class="aid"/>
-                                    <input type="checkbox" class="like"  style="visibility: hidden" checked="checked"/>
+                                    <input type="checkbox" class="like"  style="visibility: hidden" checked="checked"  th:value="${article.aid}"/>
                                     <i class="fa fa-thumbs-up" id="yes-fa-thumb"></i>
                                     <span style="color: #0C1021" th:text="'点赞'+${article.likeCount}"></span>
                                 </label>
@@ -81,12 +81,12 @@
                         <a>
                             <li>
                                 <label th:if="${isCollect=='未收藏'}"><!--读者没有收藏当前文章-->
-                                    <input type="checkbox" class="collect"  style="visibility: hidden"  />
+                                    <input type="checkbox" class="collect"  style="visibility: hidden"  th:value="${article.aid}" />
                                     <i class="fa fa-star-o" id="no-fa-star"></i>
                                     <span  style="color: #0C1021" th:text="'收藏'+${article.collectCount}"></span>
                                 </label>
                                 <label th:if="${isCollect=='已收藏'}"><!--读者已经收藏当前文章-->
-                                    <input type="checkbox" class="collect"  style="visibility: hidden" checked="checked" />
+                                    <input type="checkbox" class="collect"  style="visibility: hidden" checked="checked"  th:value="${article.aid}" />
                                     <i class="fa fa-star" id="yes-fa-star"></i>
                                     <span  style="color: #0C1021" th:text="'收藏'+${article.collectCount}"></span>
                                 </label>
@@ -120,7 +120,7 @@
                 <!--评论-->
                 <h3 th:text="${article.commentCount}+'个评论'" style="margin-bottom: 20px"></h3>
                 <div class="media" th:each="comment:${comments}" style="margin-top: 0px">
-                    <a href="javascript:;" class="pull-left">
+                    <a href="javascript:void(0);" class="pull-left">
                         <img alt="" src="/modes/assets/admin/pages/media/blog/9.jpg" class="media-object"
                              style="width: 50px">
                     </a>
@@ -178,17 +178,17 @@
                 <!--我来评论-->
                 <div class="post-comment">
                     <h3>我来评论</h3>
-                    <form role="form" action="#">
+                    <form role="form" action="javascript: void(0)">
                         <input type="hidden" th:value="${article.aid}" id="pid"/>
                         <div class="form-group">
                             <textarea class="col-md-10 form-control" rows="4" id="context"></textarea>
                         </div>
-                        <button class="margin-top-20 btn blue" type="submit" onclick="comment()" style="float: right;background-color: #E6400C;width: 100px">评论</button>
+                        <button class="margin-top-20 btn blue" onclick="comment()" style="float: right;background-color: #E6400C;width: 100px">评论</button>
                     </form>
                     <br>
                 </div>
                 <!--相关文章-->
-                <div  >
+                <div >
                     <h3 style="margin-top: 110px;margin-bottom: 20px">相关文章</h3>
                     <a style="color: #3e3e3e;text-decoration:none" th:each="article:${articles}" th:href="@{'/details/'+${article.aid}}">
                         <h4>

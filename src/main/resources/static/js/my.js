@@ -8,22 +8,22 @@ window.onload = function () {
     );
     $("#save-article").click(
         function () {
-             var title=$("#title").val();
-             var context=$("#context").val();
+            var title = $("#title").val();
+            var context = $("#context").val();
             $.ajax({
-                type:"POST",
-                url:"/unFinishedArticle",
-                contentType:"application/json",
-                data:JSON.stringify({
-                    "title":title,
-                    "context":context,
+                type: "POST",
+                url: "/unFinishedArticle",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "title": title,
+                    "context": context,
                 }),
-                success:function (response) {
-                    if (response.code==200){
-                        window.location.href="/"
+                success: function (response) {
+                    if (response.code === 200) {
+                        window.location.href = "/"
                     }
                 },
-                dataType:"json"
+                dataType: "json"
             })
 
         }
@@ -31,44 +31,47 @@ window.onload = function () {
     //点赞
     $(".like").click(
         function () {
-            if ($(".like").is(":checked")){
+            // alert(this.value);
+            if ($(".like").is(":checked")) {
                 //点击喜欢
                 $("#no-fa-thumb").addClass("fa-thumbs-up");
-                var aid=$(".aid").val();
+                // var aid=$(".aid").val();
+                var aid = this.value;
+
                 $.ajax({
-                    type:"POST",
-                    url:"/userAndArticleInc",
-                    contentType:"application/json",
-                    data:JSON.stringify({
-                        "aid":aid,
-                        "type":1,
+                    type: "POST",
+                    url: "/userAndArticleInc",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        "aid": aid,
+                        "type": 1,
                     }),
-                    success:function (response) {
-                        if (response.code==200){
+                    success: function (response) {
+                        if (response.code === 200) {
                             window.location.reload();
                         }
                     },
-                    dataType:"json"
+                    dataType: "json"
                 })
-            }else {
+            } else {
                 //取消喜欢
                 $("#yes-fa-thumb").removeClass("fa-thumbs-up");
                 $("#yes-fa-thumb").addClass("fa-thumbs-o-up");
-                var aid=$(".aid").val();
+                var aid = this.value;
                 $.ajax({
-                    type:"POST",
-                    url:"/userAndArticleDel",
-                    contentType:"application/json",
-                    data:JSON.stringify({
-                        "aid":aid,
-                        "type":1,
+                    type: "POST",
+                    url: "/userAndArticleDel",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        "aid": aid,
+                        "type": 1,
                     }),
-                    success:function (response) {
-                        if (response.code==200){
+                    success: function (response) {
+                        if (response.code === 200) {
                             window.location.reload();
                         }
                     },
-                    dataType:"json"
+                    dataType: "json"
                 })
 
             }
@@ -77,43 +80,44 @@ window.onload = function () {
     //收藏
     $(".collect").click(
         function () {
-            if ($(".collect").is(":checked")){
+            if ($(".collect").is(":checked")) {
                 $("#no-fa-star").addClass("fa-star");
                 $("#no-fa-star").removeClass("fa-star-o");
-                var aid=$(".aid").val();
+                // var aid=$(".aid").val();
+                var aid = this.value;
                 $.ajax({
-                    type:"POST",
-                    url:"/userAndArticleInc",
-                    contentType:"application/json",
-                    data:JSON.stringify({
-                        "aid":aid,
-                        "type":2,
+                    type: "POST",
+                    url: "/userAndArticleInc",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        "aid": aid,
+                        "type": 2,
                     }),
-                    success:function (response) {
-                        if (response.code==200){
+                    success: function (response) {
+                        if (response.code === 200) {
                             window.location.reload();
                         }
                     },
-                    dataType:"json"
+                    dataType: "json"
                 })
-            }else {
+            } else {
                 $("#yes-fa-star").removeClass("fa-star");
                 $("#yes-fa-star").addClass("fa-star-o");
-                var aid=$(".aid").val();
+                var aid = this.value;
                 $.ajax({
-                    type:"POST",
-                    url:"/userAndArticleDel",
-                    contentType:"application/json",
-                    data:JSON.stringify({
-                        "aid":aid,
-                        "type":2,
+                    type: "POST",
+                    url: "/userAndArticleDel",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        "aid": aid,
+                        "type": 2,
                     }),
-                    success:function (response) {
-                        if (response.code==200){
+                    success: function (response) {
+                        if (response.code === 200) {
                             window.location.reload();
                         }
                     },
-                    dataType:"json"
+                    dataType: "json"
                 })
             }
         }
@@ -121,43 +125,43 @@ window.onload = function () {
     //关注
     $(".attention").click(
         function () {
-            if ($(".attention").is(":checked")){
+            if ($(".attention").is(":checked")) {
                 $("#plus").addClass("fa-check");
                 $("#plus").removeClass("fa-plus");
                 $("#no-attention").val("已关注");
-                var upId=$("#upId").val();
+                var upId = $("#upId").val();
                 $.ajax({
-                    type:"POST",
-                    url:"/upAndFanInc",
-                    contentType:"application/json",
-                    data:JSON.stringify({
-                        "upid":upId,
+                    type: "POST",
+                    url: "/upAndFanInc",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        "upid": upId,
                     }),
-                    success:function (response) {
-                        if (response.code==200){
+                    success: function (response) {
+                        if (response.code === 200) {
                             window.location.reload();
                         }
                     },
-                    dataType:"json"
+                    dataType: "json"
                 })
-            }else {
+            } else {
                 $("#check").removeClass("fa-check");
                 $("#check").addClass("fa-plus");
                 $("#yes-attention").val("关注");
-                var upId=$("#upId").val();
+                var upId = $("#upId").val();
                 $.ajax({
-                    type:"POST",
-                    url:"/upAndFanDel",
-                    contentType:"application/json",
-                    data:JSON.stringify({
-                        "upid":upId,
+                    type: "POST",
+                    url: "/upAndFanDel",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        "upid": upId,
                     }),
-                    success:function (response) {
-                        if (response.code==200){
+                    success: function (response) {
+                        if (response.code === 200) {
                             window.location.reload();
                         }
                     },
-                    dataType:"json"
+                    dataType: "json"
                 })
             }
         }

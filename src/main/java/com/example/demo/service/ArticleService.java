@@ -146,11 +146,6 @@ public class ArticleService {
         articleExample.createCriteria()
                 .andAidEqualTo(aid);
         List<Article> articles = articleMapper.selectByExample(articleExample);
-        //文章下面的评论信息
-        CommentExample commentExample = new CommentExample();
-        commentExample.createCriteria()
-                .andPidEqualTo(aid);
-        List<Comment> comments = commentMapper.selectByExample(commentExample);
         if (articles == null) {
             return null;
         } else {
@@ -162,7 +157,7 @@ public class ArticleService {
             BeanUtils.copyProperties(articles.get(0), articleDto);
             articleDto.setTags(tags);
             articleDto.setGmtCreate(dateStr);
-            articleDto.setCommentCount(comments.size());
+            articleDto.setCommentCount(articles.get(0).getCommentCount());
             articleDto.setTimestampTime(timestampTime);
             return articleDto;
         }

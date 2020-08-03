@@ -68,13 +68,13 @@
                             <li >
                                 <label th:if="${articleDto.isLike=='不喜欢'}"><!--如果读者当时没有给这篇文章点赞-->
                                     <input type="hidden" th:value="${articleDto.aid}" class="aid"/>
-                                    <input type="checkbox" class="like"  style="visibility: hidden" />
+                                    <input type="checkbox" class="like"  style="visibility: hidden" th:value="${articleDto.aid}" />
                                     <i class="fa fa-thumbs-o-up" id="no-fa-thumb"></i>
                                     <span style="color: #0C1021" th:text="'点赞'+${articleDto.likeCount}"></span>
                                 </label>
                                 <label th:if="${articleDto.isLike=='喜欢'}"><!--如果读者已经给这篇文章点过赞-->
                                     <input type="hidden" th:value="${articleDto.aid}" class="aid"/>
-                                    <input type="checkbox" class="like"  style="visibility: hidden" checked="checked"/>
+                                    <input type="checkbox" class="like"  style="visibility: hidden" checked="checked" th:value="${articleDto.aid}"/>
                                     <i class="fa fa-thumbs-up" id="yes-fa-thumb"></i>
                                     <span style="color: #0C1021" th:text="'点赞'+${articleDto.likeCount}"></span>
                                 </label>
@@ -84,12 +84,12 @@
                         <a>
                             <li>
                                 <label th:if="${articleDto.isCollection=='未收藏'}"><!--读者没有收藏当前文章-->
-                                    <input type="checkbox" class="collect"  style="visibility: hidden"  />
+                                    <input type="checkbox" class="collect"  style="visibility: hidden"  th:value="${articleDto.aid}" />
                                     <i class="fa fa-star-o" id="no-fa-star"></i>
                                     <span  style="color: #0C1021" th:text="'收藏'+${articleDto.collectCount}"></span>
                                 </label>
                                 <label th:if="${articleDto.isCollection=='已收藏'}"><!--读者已经收藏当前文章-->
-                                    <input type="checkbox" class="collect"  style="visibility: hidden" checked="checked" />
+                                    <input type="checkbox" class="collect"  style="visibility: hidden" checked="checked" th:value="${articleDto.aid}" />
                                     <i class="fa fa-star" id="yes-fa-star"></i>
                                     <span  style="color: #0C1021" th:text="'收藏'+${articleDto.collectCount}"></span>
                                 </label>

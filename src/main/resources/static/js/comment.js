@@ -15,7 +15,7 @@ function comment () {
                 "type":1
             }),
             success:function (response) {
-                if (response.code==200){
+                if (response.code===200){
                     window.location.reload();
                 }
             },
