@@ -1,5 +1,8 @@
 package com.example.demo.dto;
-public class CommentDto {
+
+import java.io.Serializable;
+
+public class CommentDto implements Serializable {
 
     private String cid;
     private String uid;

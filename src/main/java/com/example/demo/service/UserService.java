@@ -10,6 +10,7 @@ import com.example.demo.mapper.*;
 import com.example.demo.utils.DataUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,8 @@ public class UserService {
     UserExtMapper userExtMapper;
     @Autowired
     NotificationMapper notificationMapper;
+    @Autowired
+    RedisTemplate redisTemplate;
 
     public User findUserByUid(String uid) {
         UserExample userExample = new UserExample();
@@ -150,6 +153,7 @@ public class UserService {
         }
     }
 
+    //关注
     public void upAndFanInc(UpFan upFan, HttpServletRequest request) {
         //关注功能实现，添加到数据库。
         User user=(User)request.getSession().getAttribute("user");
@@ -176,6 +180,8 @@ public class UserService {
         notification.setNotifiedStatus(NotificationStatusEnum.UNREAD.getType());
         //通知存放到数据库
         notificationMapper.insert(notification);
+        //使文章详情页面失效
+//        redisTemplate.opsForValue().set("article" + comment.getPid(),null);
 
     }
 
@@ -259,12 +265,12 @@ public class UserService {
         return fans;
     }
 
-    //查找uploader的文章(包含文章是否被点赞关注)
+    //查找uploader的文章(包含文章是否被点赞收藏)
     public List<ArticleDto> findArticleDto(User uploader, HttpServletRequest request) {
         List<ArticleDto> articleDtos=new ArrayList<>();
         //uploader的文章
         List<Article> articles = findArticle(uploader, ArticleStatusEnum.FINISHED.getType());
-        //遍历文章，看当前文章读者是否给他点赞 关注
+        //遍历文章，看当前文章读者是否给他点赞收藏
         for (Article article:articles){
             ArticleDto articleDto = new ArticleDto();
             BeanUtils.copyProperties(article,articleDto);

@@ -48,7 +48,7 @@ window.onload = function () {
                     }),
                     success: function (response) {
                         if (response.code === 200) {
-                            window.location.reload();
+                            window.location.reload(true);
                         }
                     },
                     dataType: "json"
@@ -68,7 +68,7 @@ window.onload = function () {
                     }),
                     success: function (response) {
                         if (response.code === 200) {
-                            window.location.reload();
+                            window.location.reload(true);
                         }
                     },
                     dataType: "json"

@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,8 @@ public class ArticleService {
     ArticleTypeMapper articleTypeMapper;
     @Autowired
     NotificationMapper notificationMapper;
+    @Autowired
+    RedisTemplate redisTemplate;
 
     //发布文章
     public void insert(ArticleInDto articleInDto, HttpServletRequest request) {
@@ -225,6 +228,8 @@ public class ArticleService {
             article.setCollectCount(1);
             articleExtMapper.incCollectCount(article);
         }
+        //使文章详情页面失效
+        redisTemplate.opsForValue().set("article" + userArticle.getAid(),null);
     }
 
     //取消点赞或者收藏功能
@@ -248,6 +253,8 @@ public class ArticleService {
             article.setCollectCount(1);
             articleExtMapper.decCollectCount(article);
         }
+        //使文章详情页面失效
+        redisTemplate.opsForValue().set("article" + userArticle.getAid(),null);
     }
 
     //重写草稿箱

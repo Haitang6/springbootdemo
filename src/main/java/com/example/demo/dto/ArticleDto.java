@@ -4,9 +4,10 @@ import com.example.demo.entity.User;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.crypto.Data;
+import java.io.Serializable;
 
 @Repository
-public class ArticleDto implements Comparable<ArticleDto>  {
+public class ArticleDto implements Comparable<ArticleDto> , Serializable {
 
     private String aid;
     private String Uid;

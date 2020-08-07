@@ -34,7 +34,7 @@
     <div class="portlet light " style="padding: 30px 200px 15px 230px">
         <div class="row" th:each="articleDto:${articleDtos}">
             <div class="col-md-12 article-block">
-                <span style="margin-top:0;font-size: 30px" th:text="${articleDto.title}"></span>
+                <a th:href="@{'/details/'+${articleDto.aid}}"><span style="margin-top:0;font-size: 30px ;color: black" th:text="${articleDto.title}"></span></a>
                 <div class="blog-tag-data">
                     <div class="row" style="margin-top: 10px;color: #E6400C">
                         <div class="col-md-8">

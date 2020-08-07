@@ -7,18 +7,18 @@ import com.example.demo.dto.ResultDto;
 import com.example.demo.entity.Article;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserArticle;
+import com.example.demo.redis.ArticleDetailsRedis;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.CommentService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class ArticleController {
@@ -29,6 +29,8 @@ public class ArticleController {
     CommentService commentService;
     @Autowired
     UserService userService;
+    @Autowired
+    RedisTemplate redisTemplate;
 
     //发布文章或者重写草稿箱文章
     @PostMapping("/publishArticle")
@@ -52,6 +54,26 @@ public class ArticleController {
     }
     @GetMapping("/details/{aid}")
     public String details(@PathVariable String aid, Model model,HttpServletRequest request) {
+        ArticleDetailsRedis articleDetails = (ArticleDetailsRedis)redisTemplate.opsForValue().get("article" + aid);
+        if(articleDetails != null){
+            ArticleDto articleDto = articleDetails.getArticleDto();
+            List<CommentDto> commentDtos = articleDetails.getCommentDto();
+            User user = articleDetails.getUser();
+            String isLike = articleDetails.getIsLike();
+            String isCollect = articleDetails.getIsCollect();
+            String isAttention = articleDetails.getIsAttention();
+            String isAuthor = articleDetails.getIsAuthor();
+            List<Article> articles = articleDetails.getArticles();
+            model.addAttribute("article",articleDto);
+            model.addAttribute("comments",commentDtos);
+            model.addAttribute("creator",user);
+            model.addAttribute("isLike",isLike);
+            model.addAttribute("isCollect",isCollect);
+            model.addAttribute("isAttention",isAttention);
+            model.addAttribute("isAuthor",isAuthor);
+            model.addAttribute("articles",articles);
+            return "details";
+        }
         //增加浏览数
         articleService.incView(aid);
         //文章基本信息
@@ -78,6 +100,9 @@ public class ArticleController {
         model.addAttribute("isAttention",isAttention);
         model.addAttribute("isAuthor",isAuthor);
         model.addAttribute("articles",articles);
+
+        ArticleDetailsRedis articleDetailsRedis = new ArticleDetailsRedis(articleDto, commentDtos, user, isLike, isCollect, isAttention, isAuthor, articles);
+        redisTemplate.opsForValue().set("article"+aid,articleDetailsRedis);
         return "details";
     }
     //点赞或者收藏

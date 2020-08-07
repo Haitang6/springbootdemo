@@ -14,6 +14,7 @@ import com.example.demo.repository.CommentRepository;
 import com.example.demo.utils.DataUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,8 @@ public class CommentService {
     NotificationMapper notificationMapper;
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    RedisTemplate redisTemplate;
 
 //    public void comment(Comment comment, HttpServletRequest request) {
 //        if (comment.getType() == CommentTypeEnum.ARTICLE.getType()){
@@ -110,6 +113,9 @@ public class CommentService {
             notification.setArticleName(articles.get(0).getTitle());
             //通知插入数据库
             notificationMapper.insert(notification);
+            //使文章详情页面失效
+            redisTemplate.opsForValue().set("article" + comment.getPid(),null);
+
         }
     }
 
